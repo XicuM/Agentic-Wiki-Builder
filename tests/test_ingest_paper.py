@@ -1,9 +1,7 @@
 import sys
 import os
+import json
 from unittest.mock import MagicMock, patch
-
-# Mock fitz (PyMuPDF) before importing the script that uses it
-sys.modules["fitz"] = MagicMock()
 
 # Add the scripts directory to sys.path
 scripts_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".agents", "skills", "research", "scripts"))
@@ -19,42 +17,68 @@ def test_sanitize():
     assert ingest_paper._sanitize("\t tab \t space \t") == "tab space"
 
 @patch("urllib.request.urlopen")
-@patch("urllib.request.Request")
-@patch("fitz.open")
+@patch("ingest_paper.MarkItDown")
 @patch("os.makedirs")
 @patch("os.unlink")
 @patch("builtins.open")
-def test_ingest_paper_logic(mock_file_open, mock_unlink, mock_makedirs, mock_fitz_open, mock_request, mock_urlopen):
+def test_ingest_paper_logic(mock_file_open, mock_unlink, mock_makedirs, mock_markitdown_cls, mock_urlopen):
     """Test the main ingest_paper flow with mocks."""
-    # Mock URL response
-    mock_resp = MagicMock()
-    mock_resp.read.return_value = b"%PDF-1.4 fake content"
-    mock_resp.__enter__.return_value = mock_resp
-    mock_urlopen.return_value = mock_resp
-    
-    # Mock PDF extraction
-    mock_doc = MagicMock()
-    mock_page = MagicMock()
-    mock_page.get_text.return_value = "This is the extracted text from the PDF."
-    # Simulate fitz.open(path) returning a doc that can be iterated for pages
-    mock_doc.__iter__.return_value = [mock_page]
-    mock_fitz_open.return_value = mock_doc
-    # In the script, it does: doc = fitz.open(pdf_path); pages = [page.get_text() for page in doc]
-    # So we need to make sure mock_fitz_open.return_value behaves like a list or has __iter__
-    
+
+    def urlopen_side_effect(req, *args, **kwargs):
+        # req can be a Request object or a string
+        url = req.full_url if hasattr(req, "full_url") else str(req)
+
+        mock_resp = MagicMock()
+        if "semanticscholar.org" in url or "arxiv.org/api" in url:
+            # Metadata API request
+            sample_metadata = {
+                "title": "Test Paper Title",
+                "abstract": "This is a test abstract.",
+                "year": 2026,
+                "authors": [{"name": "Test Author"}],
+                "publicationTypes": ["JournalArticle"],
+                "openAccessPdf": {"url": "https://arxiv.org/pdf/1234.5678.pdf"}
+            }
+            mock_resp.read.return_value = json.dumps(sample_metadata).encode("utf-8")
+        else:
+            # PDF file request
+            mock_resp.read.return_value = b"%PDF-1.4 fake content"
+
+        mock_resp.__enter__.return_value = mock_resp
+        return mock_resp
+
+    mock_urlopen.side_effect = urlopen_side_effect
+
+    # Mock MarkItDown: md.convert(pdf_path).text_content
+    mock_result = MagicMock()
+    mock_result.text_content = "This is the extracted text from the PDF."
+    mock_md_instance = MagicMock()
+    mock_md_instance.convert.return_value = mock_result
+    mock_markitdown_cls.return_value = mock_md_instance
+
     # Mock file writing
     mock_file = MagicMock()
     mock_file_open.return_value.__enter__.return_value = mock_file
-    
+
     # Execute
     ingest_paper.ingest_paper("https://arxiv.org/pdf/1234.5678.pdf", "test_paper.md")
-    
-    # Verify
-    mock_urlopen.assert_called()
-    mock_fitz_open.assert_called()
-    
-    # Check if the correct content was written
-    written_content = "".join(call.args[0] for call in mock_file.write.call_args_list)
+
+    # Verify MarkItDown was instantiated and convert was called
+    mock_markitdown_cls.assert_called_once()
+    mock_md_instance.convert.assert_called_once()
+    called_path = mock_md_instance.convert.call_args[0][0]
+    assert called_path.endswith("original.pdf")
+
+    # Check if the correct content was written (handling potential mix of bytes and str write args)
+    written_texts = []
+    for call in mock_file.write.call_args_list:
+        arg = call.args[0]
+        if isinstance(arg, bytes):
+            written_texts.append(arg.decode("utf-8", errors="ignore"))
+        else:
+            written_texts.append(arg)
+    written_content = "".join(written_texts)
+
     assert "source_url: https://arxiv.org/pdf/1234.5678.pdf" in written_content
     assert "status: raw" in written_content
     assert "This is the extracted text from the PDF." in written_content

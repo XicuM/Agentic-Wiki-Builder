@@ -1,0 +1,10 @@
+collections:
+  wiki:
+    path: ../../wiki
+    pattern: "**/*.md"
+  protocols:
+    path: ../../user/protocols
+    pattern: "**/*.md"
+  sources:
+    path: ../../sources/literature
+    pattern: "**/*.md"

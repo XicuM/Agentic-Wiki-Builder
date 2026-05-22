@@ -1,2 +1,12 @@
 *.pyc
 __pycache__/
+.env
+.env.local
+*.secret
+
+# Don't track build wiki, protocols, user data or generated logs
+wiki/
+protocols/
+user/
+logs/
+sources/
