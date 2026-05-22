@@ -48,7 +48,7 @@ This system is compatible with **OpenClaw** for mobile interaction via Telegram.
 ### **Canonical Installation Prompt**
 To install this project as a skill in your OpenClaw agent, send the following prompt:
 
-> "Install the skill 'protocols' from GitHub: `[YOUR_REPO_URL]`. Keep the work scoped to this skill only. After install, inspect the skill metadata and help me finish setup. Ask before making any broader environment changes."
+> "Clone this repository: `https://github.com/XicuM/agentic-wiki-builder.git`. Keep the work for this project scoped to this workspace only. Install the skills in your main workspace. After install, inspect the project structure and help me finish setup. Ask before making any broader changes."
 
 ---
 
