@@ -30,7 +30,7 @@ def search_papers(query: str, limit: int = 5, retries: int = 5):
             req = urllib.request.Request(url, headers=headers)
             with urllib.request.urlopen(req, timeout=30) as response:
                 data = json.loads(response.read().decode())
-                print(json.dumps(data, indent=2))
+                print(json.dumps(data, separators=(',', ':')))
                 return
         except HTTPError as e:
             if e.code == 429 or 500 <= e.code < 600:

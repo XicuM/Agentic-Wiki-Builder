@@ -4,9 +4,6 @@ __pycache__/
 .env.local
 *.secret
 
-# Don't track build wiki, protocols, user data or generated logs
-wiki/
-protocols/
-user/
+# Don't track generated logs and sources (raw data)
 logs/
 sources/

@@ -28,7 +28,7 @@ The system operates on a strict **Hierarchy of Evidence** using file-based state
 │   └── _index.md     # The unified Manifest (Source of Truth)
 ├── wiki/             # Synthesized, objective knowledge base (anonymized)
 ├── user/             # Personal context and deliverables
-│   ├── profile.md    # Demographics, goals, and constraints
+│   ├── profile.md    # Profile index (identity, goals, body, psyche)
 │   ├── feedback.md   # Historical outcomes and compliance notes
 │   └── protocols/    # Actionable personal protocols (Training, Diet, etc.)
 └── logs/             # Monthly activity and execution logs

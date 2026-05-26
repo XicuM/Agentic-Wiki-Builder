@@ -47,7 +47,7 @@ def search_arxiv(query: str, max_results: int = 5):
                 "openAccessPdf": {"url": pdf_url} if pdf_url else None
             })
             
-        print(json.dumps({"total": len(results), "data": results}, indent=2))
+        print(json.dumps({"total": len(results), "data": results}, separators=(',', ':')))
         
     except Exception as e:
         print(f"Error searching arXiv: {e}", file=sys.stderr)

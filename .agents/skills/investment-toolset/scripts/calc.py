@@ -61,22 +61,79 @@ def dca_projection(monthly: float, rate: float, years: float) -> dict:
     }
 
 
-def portfolio_weights(holdings: list[tuple[str, float]]) -> list[dict]:
+def portfolio_weights(holdings: list[tuple[str, float]]) -> dict:
     """
-    Given a list of (name, value) tuples, compute percentage weights.
+    Compute current weights and attempt to compute optimal Max Sharpe weights.
     """
     total = sum(v for _, v in holdings)
     if total == 0:
         print("Error: total portfolio value is 0.", file=sys.stderr)
         sys.exit(1)
-    return [
+        
+    current_weights = [
         {"name": name, "value": round(val, 2), "weight_pct": round(val / total * 100, 2)}
         for name, val in holdings
     ]
+    result = {"current_holdings": current_weights}
+    
+    tickers = [name for name, _ in holdings]
+    if len(tickers) > 1:
+        try:
+            import yfinance as yf
+            from pypfopt.expected_returns import mean_historical_return
+            from pypfopt.risk_models import CovarianceShrinkage
+            from pypfopt.efficient_frontier import EfficientFrontier
+            
+            data = yf.download(tickers, period="2y", progress=False)['Close']
+            data = data.dropna()
+            
+            if not data.empty:
+                mu = mean_historical_return(data)
+                S = CovarianceShrinkage(data).ledoit_wolf()
+                ef = EfficientFrontier(mu, S)
+                raw_weights = ef.max_sharpe()
+                cleaned_weights = ef.clean_weights()
+                
+                result["optimal_weights_pct"] = {k: round(v * 100, 2) for k, v in cleaned_weights.items()}
+                perf = ef.portfolio_performance()
+                result["optimal_performance"] = {
+                    "expected_return_pct": round(perf[0] * 100, 2),
+                    "volatility_pct": round(perf[1] * 100, 2),
+                    "sharpe_ratio": round(perf[2], 2)
+                }
+        except Exception as e:
+            print(f"PyPortfolioOpt optimization failed: {e}", file=sys.stderr)
+            
+    return result
 
 
 def get_stock_data(ticker: str) -> dict:
     """Fetch current stock price and trends using Yahoo Finance API."""
+    try:
+        import yfinance as yf
+        t = yf.Ticker(ticker)
+        hist = t.history(period="1y")
+        if not hist.empty:
+            current = float(hist['Close'].iloc[-1])
+            previous = float(hist['Close'].iloc[-2]) if len(hist) > 1 else current
+            days_1m = min(len(hist)-1, 21)
+            days_6m = min(len(hist)-1, 126)
+            days_1y = len(hist)-1
+            
+            return {
+                "ticker": ticker,
+                "currency": t.info.get("currency", ""),
+                "current_price": round(current, 2),
+                "daily_change_pct": round((current / previous - 1) * 100, 2) if previous else 0.0,
+                "1m_change_pct": round((current / float(hist['Close'].iloc[-days_1m - 1]) - 1) * 100, 2) if days_1m > 0 else 0.0,
+                "6m_change_pct": round((current / float(hist['Close'].iloc[-days_6m - 1]) - 1) * 100, 2) if days_6m > 0 else 0.0,
+                "1y_change_pct": round((current / float(hist['Close'].iloc[0]) - 1) * 100, 2) if days_1y > 0 else 0.0,
+                "exchange": t.info.get("exchange", ""),
+                "instrument_type": t.info.get("quoteType", "")
+            }
+    except Exception as e:
+        print(f"yfinance failed for {ticker}: {e}. Falling back to urllib.", file=sys.stderr)
+
     url = f"https://query1.finance.yahoo.com/v8/finance/chart/{ticker}?interval=1d&range=1y"
     req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
     try:
@@ -96,7 +153,6 @@ def get_stock_data(ticker: str) -> dict:
             current = close_prices[-1]
             previous = close_prices[-2] if len(close_prices) > 1 else current
             
-            # Rough approximations for trading days
             days_1m = min(len(close_prices)-1, 21)
             days_6m = min(len(close_prices)-1, 126)
             days_1y = len(close_prices)-1
@@ -117,24 +173,97 @@ def get_stock_data(ticker: str) -> dict:
 
 
 def get_stock_news(ticker: str, limit: int = 5) -> dict:
-    """Fetch recent news headlines using Yahoo Finance RSS."""
-    url = f"https://feeds.finance.yahoo.com/rss/2.0/headline?s={ticker}&region=US&lang=en-US"
-    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+    """Fetch recent news headlines and run FinBERT sentiment analysis."""
+    news = []
+    
+    # Primary: yfinance
     try:
-        with urllib.request.urlopen(req, timeout=10) as response:
-            xml_data = response.read()
-            root = ET.fromstring(xml_data)
-            items = root.findall('.//item')
-            news = []
-            for item in items[:limit]:
-                title = item.findtext('title')
-                link = item.findtext('link')
-                pub_date = item.findtext('pubDate')
-                if title:
-                    news.append({"title": title, "link": link, "date": pub_date})
-            return {"ticker": ticker, "news": news}
+        import yfinance as yf
+        t = yf.Ticker(ticker)
+        yf_news = t.news
+        for item in yf_news[:limit]:
+            content = item.get("content", {})
+            title = content.get("title", "")
+            link = content.get("clickThroughUrl", {}).get("url", "")
+            if not link:
+                link = content.get("canonicalUrl", {}).get("url", "")
+            if title:
+                news.append({"title": title, "link": link})
     except Exception as e:
-        return {"error": f"Failed to fetch news for {ticker}: {str(e)}"}
+        print(f"yfinance news failed for {ticker}: {e}. Falling back to RSS.", file=sys.stderr)
+        url = f"https://feeds.finance.yahoo.com/rss/2.0/headline?s={ticker}&region=US&lang=en-US"
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        try:
+            with urllib.request.urlopen(req, timeout=10) as response:
+                xml_data = response.read()
+                root = ET.fromstring(xml_data)
+                for item in root.findall('.//item')[:limit]:
+                    title = item.findtext('title')
+                    if title:
+                        news.append({"title": title, "link": item.findtext('link')})
+        except Exception as rss_e:
+            return {"error": f"Failed to fetch news for {ticker}: {str(rss_e)}"}
+
+    if not news:
+        return {"ticker": ticker, "news": []}
+        
+    try:
+        from transformers import pipeline
+        import warnings
+        warnings.filterwarnings("ignore")
+        sentiment_pipeline = pipeline("sentiment-analysis", model="ProsusAI/finbert")
+        headlines = [n["title"] for n in news]
+        results = sentiment_pipeline(headlines)
+        
+        score_map = {"positive": 1.0, "neutral": 0.0, "negative": -1.0}
+        total_score = 0
+        for i, n in enumerate(news):
+            label = results[i]['label']
+            n["sentiment"] = label
+            n["sentiment_confidence"] = round(results[i]['score'], 2)
+            total_score += score_map.get(label, 0.0)
+            
+        return {
+            "ticker": ticker, 
+            "news": news,
+            "average_sentiment_score": round(total_score / len(news), 2)
+        }
+    except Exception as e:
+        print(f"FinBERT sentiment analysis failed: {e}", file=sys.stderr)
+
+    return {"ticker": ticker, "news": news}
+
+def backtest_strategy(ticker: str) -> dict:
+    """Run a basic SMA crossover backtest using vectorbt."""
+    try:
+        import yfinance as yf
+        import vectorbt as vbt
+        import warnings
+        warnings.filterwarnings("ignore")
+        
+        data = yf.Ticker(ticker).history(period="2y")
+        if data.empty:
+            return {"error": f"No data found for {ticker}"}
+            
+        close = data['Close']
+        fast_ma = vbt.MA.run(close, 20)
+        slow_ma = vbt.MA.run(close, 50)
+        
+        entries = fast_ma.ma_crossed_above(slow_ma)
+        exits = fast_ma.ma_crossed_below(slow_ma)
+        
+        portfolio = vbt.Portfolio.from_signals(close, entries, exits, init_cash=10000)
+        
+        return {
+            "ticker": ticker,
+            "strategy": "SMA_20_50_Crossover",
+            "total_return_pct": round(portfolio.total_return() * 100, 2),
+            "win_rate_pct": round(portfolio.trades.win_rate() * 100, 2),
+            "max_drawdown_pct": round(portfolio.max_drawdown() * 100, 2),
+            "total_trades": len(portfolio.trades)
+        }
+    except Exception as e:
+        return {"error": f"Backtest failed: {e}"}
 
 
 # ── CLI ──────────────────────────────────────────────────────────────────────
@@ -180,6 +309,10 @@ def build_parser() -> argparse.ArgumentParser:
     p_news = sub.add_parser("news", help="Fetch recent stock news headlines")
     p_news.add_argument("--ticker", type=str, required=True, help="Stock ticker symbol")
 
+    # backtest
+    p_bt = sub.add_parser("backtest", help="Run algorithmic backtest (SMA Crossover)")
+    p_bt.add_argument("--ticker", type=str, required=True, help="Stock ticker symbol")
+
     return parser
 
 
@@ -205,7 +338,7 @@ def main():
         except (json.JSONDecodeError, IndexError, TypeError) as e:
             print(f"Error: invalid --holdings JSON. {e}", file=sys.stderr)
             sys.exit(1)
-        result = {"holdings": portfolio_weights(holdings)}
+        result = portfolio_weights(holdings)
 
     elif args.command == "stock":
         result = get_stock_data(args.ticker)
@@ -213,11 +346,14 @@ def main():
     elif args.command == "news":
         result = get_stock_news(args.ticker)
 
+    elif args.command == "backtest":
+        result = backtest_strategy(args.ticker)
+
     else:
         parser.print_help()
         sys.exit(0)
 
-    print(json.dumps(result, indent=2))
+    print(json.dumps(result, separators=(',', ':')))
 
 
 if __name__ == "__main__":

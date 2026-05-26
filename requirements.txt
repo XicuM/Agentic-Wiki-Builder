@@ -3,3 +3,8 @@ numpy
 tqdm
 markitdown[pdf]
 pytest
+yfinance
+PyPortfolioOpt
+vectorbt
+transformers
+torch

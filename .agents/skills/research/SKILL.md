@@ -1,28 +1,31 @@
 ---
 name: research
-description: Conducts full-text scientific literature reviews. Use this skill when you need to find recent papers, mechanisms, or data not currently present in the user's knowledge base.
+description: Conducts full-text scientific literature reviews using local Semantic Scholar and arXiv APIs.
 metadata: { "openclaw": { "emoji": "🧬" } }
 ---
-# Role: Scientific Researcher
+# Role: Scientific Researcher (`research-agent`)
 
-## Persona Context
-- **Persona:** `research-agent`
-- **Framework Support:** If operating in a multi-agent framework, assume the role of **research-agent**. If operating as a single agent, execute this as a sequential procedure.
+Execute as `research-agent` (multi-agent) or sequentially (single agent).
 
 ## Workflow
-1. **Manifest:** Read `sources/_index.md` and relevant domain indices (e.g., `sources/literature/exercise/_index.md`). Skip topics with sufficient coverage.
-2. **Search:** 
-   - Primary: Run `python .agents/skills/research/scripts/search_papers.py "<query>"` (Semantic Scholar).
-   - Fallback/Direct: Run `python .agents/skills/research/scripts/search_arxiv.py "<query>"` for recent preprints or when Semantic Scholar misses results.
-   - Parse JSON output.
-   - NEVER use direct internet search tools. You MUST rely exclusively on the provided Python scripts.
-   - Stop and report errors on failure. Do NOT fabricate results.
-3. **Download & Populate:** Pick 1-3 highly relevant papers. Identify the correct domain (e.g., `exercise`, `nutrition`). Run `python .agents/skills/research/scripts/ingest_paper.py "<paperId>" "<FileNameBase>" "<domain>"`.
-   - `paperId` can be a Semantic Scholar ID or an `arXiv:<id>` string.
-   - The script automatically falls back to arXiv for PDF downloads if Semantic Scholar's open-access link is missing.
-   - This script downloads the PDF to `sources/literature/<domain>/<FileNameBase>/original.pdf`, extracts text to `raw.md`, and creates `metadata.md`.
-4. **Manifest Update:** 
-   - Update `sources/literature/<domain>/_index.md`: Append the new paper entry.
-   - Update `sources/_index.md`: If the paper is a major addition or if tracking "Pending Ingestion", add/update it there. (Note: `sources/_index.md` serves as the SOURCE OF TRUTH for high-level ingestion state).
-   - Entry format: `- [ ] [Literature] [literature/<domain>/<filenameBase>/raw.md](literature/<domain>/<filenameBase>/raw.md) - <Brief Summary>. (<YYYY-MM-DD>) #<domain> #<tags>`
-5. **Log & Handoff:** Append to `logs/<YYYY-MM>.md` (`## [YYYY-MM-DD] research | <Topic>`).
+1. **Survey**: Read `sources/_index.md` and domain indices to check existing coverage.
+2. **Search**: Run search script (never search the web directly):
+   - Primary: `python .agents/skills/research/scripts/search_literature.py "<query>" --limit 5`
+   - You can restrict to a single provider with `--provider <name>` (choices: `pubmed`, `openalex`, `googlebooks`, `arxiv`, `semanticscholar`).
+   - Stop and report errors on failure. Do NOT fabricate results, papers, metadata, summaries, or quotes under any circumstances. All gathered research must be real and verifiable. Summaries, abstracts, or metadata must **NEVER** be generated from training memory/data. If the python scripts fail to find or download a paper, do not create any source entries for it.
+3. **Download & Populate**: Ingest 1-3 relevant papers:
+   - `python .agents/skills/research/scripts/ingest_paper.py "<paperId>" "<FileNameBase>" "<domain>"`
+   - Supported `<paperId>` formats:
+     - `openalex:<workId>` (e.g., `openalex:W4280913955`)
+     - `pmid:<pmid>` (e.g., `pmid:32165487`)
+     - `googlebooks:<volumeId>` (e.g., `googlebooks:yE5ADwAAQBAJ`)
+     - `arXiv:<arxivId>` (e.g., `arXiv:2101.12345`)
+     - `local:<path_to_pdf>` (e.g., `local:sources/literature/user_uploads/my_file.pdf`)
+     - Raw Semantic Scholar hash (e.g., from Semantic Scholar search output)
+   - Note: Downloads/copies PDF to `sources/literature/<domain>/<FileNameBase>/original.pdf`, extracts to `raw.md`, and creates `metadata.md`.
+4. **Update Manifest**:
+   - Append the clean link (NO checkmarks) to the local subdirectory `sources/literature/<domain>/_index.md`:
+     `[filenameBase/raw.md](filenameBase/raw.md) - <Summary>. (<YYYY-MM-DD>) #<tags>`
+   - Append the pending checkmarked item to the global `sources/_index.md` queue:
+     `- [ ] [Literature] [literature/<domain>/<filenameBase>/raw.md](literature/<domain>/<filenameBase>/raw.md) - <Summary>. (<YYYY-MM-DD>) #<domain> #<tags>`
+5. **Commit**: Commit activity using `git commit -m "..."` within the appropriate submodule.
