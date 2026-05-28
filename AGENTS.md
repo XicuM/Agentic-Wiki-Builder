@@ -17,8 +17,8 @@ Framework-agnostic. Supports:
 
 ## Handoff Protocol
 State is strictly filesystem-driven:
-1. **Discovery**: `research` appends the clean file link to the domain-specific index (e.g. `sources/literature/exercise/_index.md`) and the checkmarked pending item `- [ ] [Link](path)` to the `sources/_index.md` ingestion queue.
-2. **Ingestion**: `ingest` processes pending items in the `sources/_index.md` queue into `wiki/`, then deletes the processed items from `sources/_index.md`.
+1. **Discovery**: `research` appends the clean file link to the domain-specific index (e.g. `sources/literature/exercise/_index.md`) and adds a pending queue item object to `state.json` at the root of the project.
+2. **Ingestion**: `ingest` processes pending items in the `state.json` queue into `wiki/`, then removes the processed items from `state.json`.
 3. **Drafting**: `build-protocol` updates `user/protocols/` using `wiki/` and user feedback.
 4. **Validation**: `lint` and `fact-check` run audit scripts on all directories.
 
@@ -47,7 +47,7 @@ State is strictly filesystem-driven:
 - **Visual Synthesis**: Heavily utilize Mermaid diagrams (````mermaid````) to map out protocols, biological mechanisms, system architectures, decision trees, and complex conceptual relationships. Prefer visual abstractions (flowcharts, state diagrams, sequence diagrams) for high-level summaries.
 - **Naming & Case**: Files must be `snake_case.md`.
 - **Directory Indices**: Every directory requires `_index.md` listing all files in it with a one-line summary. Skills must read `_index.md` first. Directory indices must remain clean, static catalogs and must NOT contain task or ingestion checkmarks (`[x]` or `[ ]`).
-- **Manifest / Ingestion Queue (`sources/_index.md`)**: Top-level directory index for sources and the active ingestion queue. The `## Ingestion Queue` section uses format `- [ ] [Category] [Link](path) - Summary. (<YYYY-MM-DD>) #tags` to track pending items. Once ingested, the items are removed from this file completely.
+- **Manifest / Ingestion Queue (`state.json`)**: Central registry at the project root that serves as the single source of truth for orchestrating all agents. Contains the ingestion queue and active agent states; once items are processed and ingested, they are removed from the queue in this file.
 - **Separation of responsibilities:** 
   - **Wiki:** It is the repository for evidence, competing hypotheses, and mechanism explanations. Every conceptual wiki page MUST be articulated around:
     1. **Origins:** Who proposed the idea/mechanism and the historical context.
