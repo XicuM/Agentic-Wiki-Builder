@@ -24,6 +24,7 @@ State is strictly filesystem-driven:
 
 ## Skills Workflow & Owners
 - `wiki-query` (Universal): Query wiki or protocols.
+- `harness` (Universal): Runtime state, context compaction, and permission gating.
 - `research` (`research-agent`): Discover literature.
 - `ingest` (`synthesis-agent`): Synthesize literature into wiki.
 - `build-protocol` (`protocol-agent`): Generate actionable protocols.
