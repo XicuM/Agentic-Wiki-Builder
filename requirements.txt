@@ -8,3 +8,6 @@ PyPortfolioOpt
 vectorbt
 transformers
 torch
+mcp[cli]
+httpx
+academic-mcp
