@@ -15,5 +15,10 @@ Execute as `protocol-agent` (multi-agent) or sequentially (single agent).
    - **No justifications**: Do not explain "why" a recommendation is made in the protocol.
    - **Citations**: Cite every action/parameter via `markdown-it` footnotes (e.g. `[^1]`) linking to the relevant wiki page.
    - State how traits from `user/profile.md` (and its sections) inform adaptations (e.g., "Scaled to your [Trait]").
-4. **Verify & Link**: Ensure links resolve to existing `wiki/` files. Add new/updated protocol to `user/protocols/_index.md`.
+   - **YAML Frontmatter**: Every created or modified protocol must begin with a standardized YAML frontmatter containing `title`, `category` (directory path relative to `user/protocols/` or `user/` root), `related` (list of linked internal relative files), and `rationale` (one-sentence justification of its location and purpose in the protocol hierarchy).
+4. **Verify & Link**: 
+   - Ensure links resolve to existing `wiki/` files.
+   - Add new/updated protocol to `user/protocols/_index.md`.
+   - Rebuild the semantic index using the `wiki_update_index` tool.
+   - Run the `lint_check_links` tool to verify the new/updated file's frontmatter and links pass validation.
 5. **Commit**: Commit activity using `git commit -m "..."` within the appropriate submodule.

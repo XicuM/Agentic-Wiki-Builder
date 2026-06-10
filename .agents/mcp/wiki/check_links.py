@@ -26,6 +26,7 @@ def check_file(filepath):
         "broken_links": [],
         "missing_footnotes": [],
         "unused_footnotes": [],
+        "missing_frontmatter": [],
         "word_count": 0
     }
     
@@ -57,6 +58,30 @@ def check_file(filepath):
     results["missing_footnotes"] = missing
     results["unused_footnotes"] = unused
     
+    # Check Frontmatter
+    parts = os.path.normpath(filepath).split(os.sep)
+    is_wiki_or_user = 'wiki' in parts or 'user' in parts
+    if os.path.basename(filepath) != '_index.md' and is_wiki_or_user:
+        fm_match = re.match(r'^\s*---\s*\n(.*?)\n---\s*\n', content, re.DOTALL)
+        if not fm_match:
+            results["missing_frontmatter"].append("Entire YAML frontmatter block is missing")
+        else:
+            fm_text = fm_match.group(1)
+            has_category = re.search(r'^category\s*:', fm_text, re.MULTILINE)
+            has_related = re.search(r'^related\s*:', fm_text, re.MULTILINE)
+            has_rationale = re.search(r'^rationale\s*:', fm_text, re.MULTILINE)
+            
+            missing = []
+            if not has_category:
+                missing.append("category")
+            if not has_related:
+                missing.append("related")
+            if not has_rationale:
+                missing.append("rationale")
+                
+            if missing:
+                results["missing_frontmatter"].append(f"Missing required fields: {', '.join(missing)}")
+    
     # Check Word Count
     results["word_count"] = len(content.split())
             
@@ -83,7 +108,7 @@ def run_audit(root_dir):
                 res = check_file(path)
                 
                 has_issues = False
-                if res.get("broken_links") or res.get("missing_footnotes") or res.get("unused_footnotes"):
+                if res.get("broken_links") or res.get("missing_footnotes") or res.get("unused_footnotes") or res.get("missing_frontmatter"):
                     has_issues = True
                     
                 parts = os.path.normpath(path).split(os.sep)
@@ -133,6 +158,10 @@ if __name__ == "__main__":
                 
             if res.get("unused_footnotes"):
                 issues.append(f"Unused Footnote Definitions: {', '.join(res['unused_footnotes'])}")
+                has_issues = True
+                
+            if res.get("missing_frontmatter"):
+                issues.append(f"Missing Frontmatter: {'; '.join(res['missing_frontmatter'])}")
                 has_issues = True
                 
             if has_issues:
