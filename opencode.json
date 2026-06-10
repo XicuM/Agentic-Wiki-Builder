@@ -1,0 +1,36 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "finance-mcp": {
+      "type": "local",
+      "command": [
+        "/home/xicu/Projects/agentic-wiki-builder/.venv/bin/python",
+        "/home/xicu/Projects/agentic-wiki-builder/.agents/mcp/finance/server.py"
+      ],
+      "environment": {
+        "PROJECT_ROOT": "/home/xicu/Projects/agentic-wiki-builder"
+      }
+    },
+    "wiki-mcp": {
+      "type": "local",
+      "command": [
+        "/home/xicu/Projects/agentic-wiki-builder/.venv/bin/python",
+        "/home/xicu/Projects/agentic-wiki-builder/.agents/mcp/wiki/server.py"
+      ],
+      "environment": {
+        "PROJECT_ROOT": "/home/xicu/Projects/agentic-wiki-builder"
+      }
+    },
+    "research-mcp": {
+      "type": "local",
+      "command": [
+        "/home/xicu/Projects/agentic-wiki-builder/.venv/bin/python",
+        "/home/xicu/Projects/agentic-wiki-builder/.agents/mcp/research/server.py"
+      ],
+      "environment": {
+        "PROJECT_ROOT": "/home/xicu/Projects/agentic-wiki-builder",
+        "SEMANTIC_SCHOLAR_API_KEY": "s2k-XTBRJLNoBc6Ldi0WmwsVcMsSoChlw3A93h7S1Yrk"
+      }
+    }
+  }
+}

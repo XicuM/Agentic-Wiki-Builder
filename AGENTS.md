@@ -4,33 +4,45 @@ Literature synthesis into an auto-recursive wiki and actionable protocols. Suppo
 
 ## Core Personas
 - **Supervisor**: Orchestrates tasks, delegates, monitors `sources/_index.md`.
-- **Researcher (`research-agent`)**: Discovers literature via scripts, stages in `sources/`, updates manifest.
+- **Researcher (`research-agent`)**: Discovers literature via `research-mcp` tools, stages in `sources/`, updates manifest.
 - **Synthesizer (`synthesis-agent`)**: Ingests sources into `wiki/` knowledge base.
 - **Protocol Architect (`protocol-agent`)**: Translates `wiki/` + `user/profile/` into actionable protocols.
-- **Investor (`investor-agent`)**: Portfolio advice, tracking via `wiki/investments/` + `user/portfolio.md`.
-- **Auditor (`audit-agent`)**: Linting, fact-checking, link validation.
+- **Investor (`investor-agent`)**: Portfolio advice, tracking via `wiki/investments/` + `user/portfolio.md` using `finance-mcp` tools.
+- **Auditor (`audit-agent`)**: Linting, fact-checking, link validation via `wiki-mcp` tools.
 
 ## Handoff Protocol (Filesystem-Driven)
 1. **Discovery**: Researcher appends clean link to domain `_index.md`, adds pending item to `state.json`.
 2. **Ingestion**: Synthesizer processes pending queue items into `wiki/`, removes from `state.json`.
 3. **Drafting**: Protocol Architect updates `user/protocols/` from `wiki/` + user feedback.
-4. **Validation**: Auditor runs lint and fact-check scripts across all directories.
+4. **Validation**: Auditor runs lint and fact-check tools (`lint_check_links`, `lint_audit_stubs`) across all directories.
 
 ## Skills
-- `research` (Researcher): Discover literature.
-- `ingest` (Synthesizer): Synthesize sources into wiki.
-- `build-protocol` (Protocol Architect): Generate personalized protocols.
-- `lint` (Auditor): Structure, link, and bloat audit.
-- `fact-check` (Auditor): Claim verification against wiki/sources.
-- `wiki-query` (Universal): Query wiki, protocols, or sources via `qmd`.
-- `harness` (Universal): Runtime state, context compaction, permission gating.
-- `investment-toolset` (Investor): CAGR, FV, DCA, portfolio weights, stock trends.
-- `expense-tracker` (Universal): Ingest bank CSVs, categorize, query, generate budgets.
+- `ingest` (Synthesizer): Ingestion and synthesis into wiki.
+- `build-protocol` (Protocol Architect): Protocol drafting and updates.
+- `fact-check` (Auditor): Verification of claims against wiki/sources.
+- `harness` (Universal): Context compaction and execution gating.
+
+## MCP Servers & Tools
+- **`research-mcp`**:
+  - `search_literature`: Discover papers across multiple search engines.
+  - `download_paper`: Fetch metadata, download PDF, extract text, and stage source.
+  - `queue_list`, `queue_enqueue`, `queue_dequeue`: Manage the ingestion queue in `state.json`.
+- **`wiki-mcp`**:
+  - `wiki_search`, `wiki_vsearch`, `wiki_query`: Query the wiki/protocols/sources using BM25, vector search, or hybrid search.
+  - `wiki_get`: Read full document contents.
+  - `wiki_update_index`: Rebuild semantic index.
+  - `lint_check_links`: Audit links, footnotes, file counts, and length.
+  - `lint_audit_stubs`: Cross-check stubs against citations.
+  - `lint_backup_sources`: Snapshot sources metadata.
+- **`finance-mcp`**:
+  - `calc_cagr`, `calc_fv`, `calc_dca`, `calc_weights`: Portfolio math and projection.
+  - `stock_price`, `stock_news`, `stock_backtest`: Live stock data and backtesting.
+  - `expense_*` (e.g. `expense_parse`, `expense_monthly`, etc.): Ingest and query transactions.
 
 ## Conventions & Strict Rules
 - **No Fabrication**: NEVER invent sources, papers, quotes, or metadata. All `sources/` entries must represent real, verifiable documents with actual PDF/raw text.
 - **Truth Over Completion**: Halt or refuse a task rather than generate from memory if no verified source exists.
-- **No Web Search**: Use `research` skill scripts; never search the internet directly.
+- **No Web Search**: Use `research-mcp` search tools; never search the internet directly.
 - **Hierarchy of Evidence**: Protocols cite Wiki; Wiki cites Sources.
 - **Citation Format**: `markdown-it` footnotes (`[^1]`). Wiki cites `sources/` files; Protocols cite `wiki/` pages. No inline URLs or search engine links.
 - **No Stubs**: Skip sources with `status: stub` or failed extraction. Halt and request the PDF.
