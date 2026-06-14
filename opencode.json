@@ -29,7 +29,7 @@
       ],
       "environment": {
         "PROJECT_ROOT": "/home/xicu/Projects/agentic-wiki-builder",
-        "SEMANTIC_SCHOLAR_API_KEY": "s2k-XTBRJLNoBc6Ldi0WmwsVcMsSoChlw3A93h7S1Yrk"
+        "SEMANTIC_SCHOLAR_API_KEY": ""
       }
     }
   }

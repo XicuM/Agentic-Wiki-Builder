@@ -7,3 +7,9 @@ __pycache__/
 # Don't track generated logs and sources (raw data)
 logs/
 sources/
+
+# OpenCode runtime sync files
+opencode-sync/
+
+# Copsilot plugin personal session data
+.obsidian/plugins/copsilot/data.json

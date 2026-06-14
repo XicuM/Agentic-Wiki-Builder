@@ -1,55 +1,91 @@
 # Agentic Wiki Builder
 
-A modular system for automating the transformation of information into highly personalized, actionable protocols. This project utilizes a **Hybrid Agentic Architecture**, supporting both multi-agent orchestration and sequential single-agent execution.
+A modular, evidence-based system that automates the transformation of raw information (such as scientific literature, data, and documents) into a structured knowledge base (Wiki) and translates it into personalized, actionable guidelines (Protocols).
 
-## 🚀 The Workflow
+The architecture is entirely **filesystem-driven** and framework-agnostic. Multiple agents (or a single agent playing multiple roles) coordinate asynchronously by writing state changes to the filesystem and git submodules.
 
-The system operates on a strict **Hierarchy of Evidence** using file-based state handoffs:
-1.  **Research (`research-agent`):** Automatically discovery and ingest relevant scientific papers based on specific goals. Updates `sources/_index.md`.
-2.  **Ingest (`synthesis-agent`):** Synthesize raw literature into an anonymized, evidence-based Wiki. Reads `sources/`.
-3.  **Build Protocol (`protocol-agent`):** Generate strictly actionable, step-by-step instructions for the user, tailored to their profile and feedback. Reads `wiki/`.
+---
 
-**Execution Modes:**
-- **Framework-Agnostic:** Can be run by a single monolithic agent or a multi-agent framework.
-- **Orchestration:** Handoffs are managed via the filesystem state, ensuring robust operation regardless of the underlying LLM framework.
+## 🚀 The Workflow Pipeline
 
-**Citations are mandatory at every step:**
-*   **Protocols** cite the **Wiki** (Actionable synthesis).
-*   **Wiki** cites **Literature** (Raw evidence).
+Evidence progresses through a strict pipeline with a formal **Hierarchy of Evidence**:
+
+```mermaid
+graph TD
+    Sources[1. Sources / Raw Literature] -->|Ingested by Synthesizer| Wiki[2. Wiki / Objective Knowledge]
+    Wiki -->|Tailored by Protocol Architect| Protocols[3. Protocols / Personalized Actions]
+```
+
+1. **Research (Source Discovery):** Discovers literature or internal data, stages files in `sources/`, and logs items in `state.json`.
+2. **Ingest (Synthesis):** Compiles and resolves raw source material into the objective, anonymized `wiki/` knowledge base.
+3. **Build Protocol (Actionable Output):** Adapts objective Wiki knowledge to a user's specific goals, constraints, and physiological parameters in `user/protocols/`.
+
+---
 
 ## 📁 Repository Structure
 
 ```text
-├── .agents/          # Specialized logic and scripts for AI agents
-├── sources/          # Unified staging area for all inputs
-│   ├── literature/   # Raw research papers and processing metadata
-│   ├── code/         # Repositories, snippets, and architectural docs
-│   ├── internal_documentation/ # Meeting notes, internal reports, and decisions
-│   └── _index.md     # The unified Manifest (Source of Truth)
-├── wiki/             # Synthesized, objective knowledge base (anonymized)
-├── user/             # Personal context and deliverables
-│   ├── profile.md    # Profile index (identity, goals, body, psyche)
-│   ├── feedback.md   # Historical outcomes and compliance notes
-│   └── protocols/    # Actionable personal protocols (Training, Diet, etc.)
-└── logs/             # Monthly activity and execution logs
+├── .agents/          # Agent scripts, tools, and execution packages (skills)
+│   ├── mcp/          # Model Context Protocol (MCP) servers (wiki, research, finance)
+│   └── skills/       # Action packages (ingest, build-protocol, fact-check)
+├── sources/          # Unified staging area for all raw inputs (literature, code, docs)
+├── wiki/             # Git Submodule: Synthesized, objective knowledge base (anonymized)
+├── user/             # Git Submodule: Personal profile, feedback, and active protocols
+└── state.json        # Central execution manifest & ingestion queue
 ```
-
-## 🛠 Skills & Capabilities
-
-*   **`research`**: Scours scientific databases to find high-impact, peer-reviewed data.
-*   **`ingest`**: Distills complex mechanisms into a clear, searchable knowledge base.
-*   **`lint`**: Audits the entire system for contradictions, gaps, and structural integrity.
-*   **`build-protocol`**: Adapts science to the user's specific lifestyle, constraints, and feedback.
-
-## 📱 Mobile Access (OpenClaw)
-
-This system is compatible with **OpenClaw** for mobile interaction via Telegram.
-
-### **Canonical Installation Prompt**
-To install this project as a skill in your OpenClaw agent, send the following prompt:
-
-> "Clone this repository: `https://github.com/XicuM/agentic-wiki-builder.git`. Keep the work for this project scoped to this workspace only. Install the skills in your main workspace. After install, inspect the project structure and help me finish setup. Ask before making any broader changes."
 
 ---
 
-*This repository is managed by an autonomous agent system. All changes are logged in the `logs/` directory.*
+## 🛠 Features & Capabilities
+
+* **Asynchronous Handoffs**: Coordination mediated completely by `state.json` and index updates. No active runtime orchestration is required.
+* **Model Context Protocol (MCP)**: Native servers (`research-mcp`, `wiki-mcp`, `finance-mcp`) allow LLMs to query databases, search literature, and run portfolio math.
+* **Hermetic Submodules**: The `wiki/` and `user/` directories are decoupled git submodules to ensure clear boundaries between objective knowledge and user-private context.
+
+---
+
+## ⚙️ Installation & Setup
+
+Follow these steps to set up the project locally:
+
+### 1. Clone the Repository
+Clone the repository along with its submodules:
+```bash
+git clone --recursive https://github.com/XicuM/agentic-wiki-builder.git
+cd agentic-wiki-builder
+```
+
+### 2. Configure Environment & Dependencies
+Create a virtual environment and install the required dependencies:
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+Set up your environment variables by copying the template file:
+```bash
+cp .example.env .env
+```
+Open `.env` and fill in your API credentials (e.g., `SEMANTIC_SCHOLAR_API_KEY`).
+
+### 3. Connect MCP Servers to your Agent / IDE
+The project defines three MCP servers in `mcp_config.json`. You can integrate these into your LLM client (such as Claude Desktop):
+
+* **Claude Desktop Configuration** (typically at `~/.config/Claude/claude_desktop_config.json`):
+  Merge the contents of `mcp_config.json` into your `mcpServers` object, adjusting the absolute paths to match your local installation directory.
+
+### 4. Run the Test Suite
+Ensure the dependencies and local MCP servers are working correctly by running the tests:
+```bash
+pytest
+```
+
+---
+
+## 📱 Mobile Integration (OpenClaw)
+
+This workspace can be integrated with mobile-friendly agent frontends like **OpenClaw** (e.g., via Telegram). 
+
+To install this workspace as an autonomous skill, send this prompt to your OpenClaw-backed agent:
+> "Clone this repository: `https://github.com/XicuM/agentic-wiki-builder.git`. Keep the work for this project scoped to this workspace only. Install the skills in your main workspace. After install, inspect the project structure and help me finish setup. Ask before making any broader changes."

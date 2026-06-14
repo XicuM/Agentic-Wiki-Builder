@@ -39,7 +39,6 @@ for _p in (_WIKI_DIR,):
 
 # Import lint scripts directly (they expose importable functions)
 import check_links   # noqa: E402
-import audit_stubs   # noqa: E402
 import backup_sources  # noqa: E402
 
 # ── Server ────────────────────────────────────────────────────────────────────
@@ -175,13 +174,6 @@ async def lint_check_links(
     """Check for broken links, missing/unused footnotes, directory bloat, and page length."""
     path = ROOT / scope_path
     return await _run_script("check_links.py", str(path))
-
-
-@mcp.tool()
-async def lint_audit_stubs() -> str:
-    """Cross-reference stub sources against wiki citations. Zero output means clean."""
-    return await _run_script("audit_stubs.py")
-
 
 @mcp.tool()
 async def lint_backup_sources() -> str:

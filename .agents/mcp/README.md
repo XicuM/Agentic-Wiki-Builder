@@ -88,7 +88,6 @@ Resources: `finance://transactions`, `finance://category-rules`
 | `wiki_get` | Retrieve full document by path |
 | `wiki_update_index` | Rebuild qmd semantic index |
 | `lint_check_links` | Broken links, footnotes, bloat audit |
-| `lint_audit_stubs` | Cross-check stubs vs wiki citations |
 | `lint_backup_sources` | Snapshot sources metadata to JSON |
 
 Resources: `wiki://collections/wiki`, `wiki://collections/protocols`, `wiki://collections/sources`

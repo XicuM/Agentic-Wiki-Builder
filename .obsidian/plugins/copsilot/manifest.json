@@ -1,0 +1,10 @@
+{
+  "id": "copsilot",
+  "name": "Copsilot",
+  "author": "Xicu Marí",
+  "authorUrl": "https://github.com/player-Muteki",
+  "description": "Embed the complete OpenCode agent inside your sidebar.",
+  "minAppVersion": "1.8.0",
+  "isDesktopOnly": true,
+  "version": "0.1.14"
+}
