@@ -1,0 +1,5 @@
+# Ignore all content, keep only directory structure markers
+*
+!.gitignore
+!.gitkeep
+!*/
