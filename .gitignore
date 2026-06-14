@@ -5,9 +5,8 @@ __pycache__/
 .env.local
 *.secret
 
-# Don't track generated logs and sources (raw data)
+# Don't track generated logs
 logs/
-sources/
 
 # OpenCode runtime sync files
 opencode-sync/
