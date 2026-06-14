@@ -70,10 +70,9 @@ cp .example.env .env
 Open `.env` and fill in your API credentials (e.g., `SEMANTIC_SCHOLAR_API_KEY`).
 
 ### 3. Connect MCP Servers to your Agent / IDE
-The project defines three MCP servers in `mcp_config.json`. You can integrate these into your LLM client (such as Claude Desktop):
+The project defines three MCP servers in `opencode.json`. The servers auto-detect the project root (via `state.json`) and use relative Python paths — no manual path editing required if you use opencode.
 
-* **Claude Desktop Configuration** (typically at `~/.config/Claude/claude_desktop_config.json`):
-  Merge the contents of `mcp_config.json` into your `mcpServers` object, adjusting the absolute paths to match your local installation directory.
+If using Claude Desktop, create equivalent entries referencing your local `.venv/bin/python` and `.agents/mcp/*/server.py` paths.
 
 ### 4. Run the Test Suite
 Ensure the dependencies and local MCP servers are working correctly by running the tests:
