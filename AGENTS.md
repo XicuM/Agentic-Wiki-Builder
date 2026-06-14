@@ -27,7 +27,7 @@ The coordination is asynchronous, mediated by the file structure:
 
 ### Hierarchy of Evidence & Citation
 *   **Citations**: Protocols cite the Wiki (`wiki/`); the Wiki cites Sources (`sources/`).
-*   **Format**: Use `markdown-it` footnotes (`[^1]`) and relative markdown links (`[Text](../path.md)`). Never use inline URLs, external links, or `[[wikilinks]]`.
+*   **Format**: Use `markdown-it` footnotes (`[^1]`) for citations and relative markdown links (`[Text](../path.md)`) for cross-references. Every mention of another wiki page in body text must be a clickable relative link — no unlinked page references. Never use inline URLs, external links, or `[[wikilinks]]`.
 *   **Naming**: Use `snake_case.md` for all files.
 
 ### Evidence & Truth
