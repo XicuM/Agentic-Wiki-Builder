@@ -67,7 +67,19 @@ Set up your environment variables by copying the template file:
 ```bash
 cp .example.env .env
 ```
-Open `.env` and fill in your API credentials (e.g., `SEMANTIC_SCHOLAR_API_KEY`).
+Open `.env` and fill in your API credentials. The research agent requires a **Semantic Scholar API key** for literature search and paper downloads:
+
+1. Get your free key at [https://www.semanticscholar.org/product/api](https://www.semanticscholar.org/product/api)
+2. Add it to `.env`:
+   ```
+   SEMANTIC_SCHOLAR_API_KEY=your_api_key_here
+   ```
+3. Load the environment before running agents:
+   ```bash
+   export $(grep -v '^#' .env | xargs)
+   ```
+
+The MCP server reads this key from the parent environment — never put credentials directly in `opencode.json`.
 
 ### 3. Connect MCP Servers to your Agent / IDE
 The project defines three MCP servers in `opencode.json`. The servers auto-detect the project root (via `state.json`) and use relative Python paths — no manual path editing required if you use opencode.

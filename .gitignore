@@ -8,8 +8,17 @@ __pycache__/
 # Don't track generated logs
 logs/
 
+# State manifest (agents use local copies, template is versioned)
+state.json
+
+# Obsidian personal workspace (browsing history, open files)
+.obsidian/workspace.json
+
 # OpenCode runtime sync files
 opencode-sync/
+
+# Semantic search index (generated)
+.agents/.qmd/
 
 # Copsilot plugin personal session data
 .obsidian/plugins/copsilot/data.json

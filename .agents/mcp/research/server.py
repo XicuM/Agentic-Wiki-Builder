@@ -49,14 +49,32 @@ _API_KEY: str = os.environ.get("SEMANTIC_SCHOLAR_API_KEY", "")
 
 # Allowed outbound domains (runtime_gate policy inlined)
 _ALLOWED_DOMAINS = {
+    # Core APIs
     "api.semanticscholar.org",
-    "export.arxiv.org",
     "api.openalex.org",
+    "api.unpaywall.org",
+    "googleapis.com",
+    # PubMed / NCBI
     "eutils.ncbi.nlm.nih.gov",
     "www.ncbi.nlm.nih.gov",
-    "googleapis.com",
-    "api.unpaywall.org",
+    "pmc.ncbi.nlm.nih.gov",
+    # arXiv
     "arxiv.org",
+    "export.arxiv.org",
+    # Institutional repositories
+    "upc.edu",
+    "upcommons.upc.edu",
+    # Publishers / Digital Libraries
+    "dl.acm.org",
+    "acm.org",
+    "ieeexplore.ieee.org",
+    "ieee.org",
+    "academic.oup.com",
+    "oup.com",
+    # DOI & preprint servers
+    "doi.org",
+    "biorxiv.org",
+    "www.biorxiv.org",
 }
 
 # ── Server ────────────────────────────────────────────────────────────────────

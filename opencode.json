@@ -22,10 +22,7 @@
       "command": [
         ".venv/bin/python",
         ".agents/mcp/research/server.py"
-      ],
-      "environment": {
-        "SEMANTIC_SCHOLAR_API_KEY": ""
-      }
+      ]
     }
   }
 }

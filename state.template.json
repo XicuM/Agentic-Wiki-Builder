@@ -1,0 +1,9 @@
+{
+  "version": "1.0",
+  "ingestion_queue": [],
+  "orchestration": {
+    "active_agent": null,
+    "current_task": null,
+    "locks": {}
+  }
+}
