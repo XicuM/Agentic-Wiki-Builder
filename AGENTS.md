@@ -34,6 +34,7 @@ The coordination is asynchronous, mediated by the file structure:
 *   **No Fabrication**: Do not invent sources, quotes, or metadata. If verified source evidence is missing, halt and request the raw document.
 *   **No Stubs**: Skip sources with `status: stub` or failed extraction.
 *   **No Web Search**: Discover literature using dedicated research tools; never search the web directly.
+*   **Document Conversion (MarkItDown)**: Always use `markitdown` (via `.venv/bin/markitdown <file>`) to convert and read PDF, Word, Excel, or other document formats to Markdown. Do not write ad-hoc Python parsing scripts (e.g., using PyPDF2, pdfplumber, openpyxl) to extract text or values from documents.
 
 ### Separation of Responsibilities
 *   **Wiki (Objective)**: Must remain anonymous and objective. Present competing hypotheses with confidence markers (`> ⚠️`). Do not include user-specific data.
