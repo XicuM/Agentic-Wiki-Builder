@@ -1,6 +1,9 @@
 [submodule "user"]
 	path = user
-	url = ./user
+	url = git@github.com:XicuM/agentic-wiki-user.git
 [submodule "wiki"]
 	path = wiki
-	url = ./wiki
+	url = git@github.com:XicuM/agentic-wiki-wiki.git
+[submodule "sources"]
+	path = sources
+	url = git@github.com:XicuM/agentic-wiki-sources.git
