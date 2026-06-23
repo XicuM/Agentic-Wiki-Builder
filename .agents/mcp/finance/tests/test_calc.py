@@ -2,13 +2,10 @@ import sys
 import os
 import pytest
 
-# Add finance and wiki MCP directories to sys.path
-base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-sys.path.insert(0, os.path.join(base_dir, ".agents", "mcp", "finance"))
-sys.path.insert(0, os.path.join(base_dir, ".agents", "mcp", "wiki"))
+# Add finance MCP directory to sys.path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import calc
-import check_links
 
 def test_calc_cagr():
     # Test CAGR calculation
@@ -29,7 +26,3 @@ def test_calc_dca():
     assert "projected_value" in proj
     assert "total_gain" in proj
     assert proj["total_contributed"] == 12000
-
-def test_check_links_link_parsing():
-    # Test internal helper in check_links if any
-    assert hasattr(check_links, "check_file")
