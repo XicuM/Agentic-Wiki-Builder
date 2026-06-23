@@ -20,6 +20,7 @@ The coordination is asynchronous, mediated by the file structure:
 *   **Manifest (`sources/state.json`)**: Orchestration queue for pending ingestion.
 *   **Wiki (`wiki/` submodule)**: Objective knowledge base (anonymized, theory-focused).
 *   **User Workspace (`user/` submodule)**: Personalized deliverables (user profiles, feedback, actionable protocols).
+*   **Temporary Workspace (`tmp/`)**: Used for temporal edits, temporary data storage, or scratchpad operations when the user is adding information or data.
 
 ---
 
@@ -42,6 +43,7 @@ The coordination is asynchronous, mediated by the file structure:
 *   **User Profile**: Persist only structural, recurring traits (goals, constraints, physiology). Never save anecdotal one-off events.
 
 ### Workspace Structure & Version Control
+*   **Always Synchronize First**: Before executing any task that modifies the repository or its submodules, you must synchronize with the remote (e.g., `git pull` in the root and relevant submodules) to avoid conflicts and ensure you are working on the latest state.
 *   **Submodule Isolation**: The `wiki/` and `user/` directories are independent git submodules. Commits must be made directly within the submodules to serve as a status log of agent operations.
 *   **Index Catalogs**: Every directory must contain an `_index.md` listing its contents with one-line summaries. Do not place task/progress markers in index catalogs.
 *   **Folder Bloat Limit**: Maximum of 15 content files per directory (excluding `_index.md`). Restructure into subdirectories when this limit is exceeded.
