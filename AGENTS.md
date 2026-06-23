@@ -9,7 +9,7 @@ Agents operate as functional layers of the evidence-to-action pipeline:
 
 *   **Researcher**: Discovers peer-reviewed literature and stages raw sources.
 *   **Synthesizer**: Ingests raw sources and compiles objective knowledge into the Wiki.
-*   **Protocol Architect**: Translates Wiki findings and user profile constraints into step-by-step, personalized protocols.
+*   **Protocol Architect**: Translates Wiki findings and user profile constraints into step-by-step, personalized protocols (e.g., using menumaker tools to compute optimal nutritional meal plans).
 *   **Auditor**: Runs automated validation, audits citation integrity, and checks link structures.
 
 ---
