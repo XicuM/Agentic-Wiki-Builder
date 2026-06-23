@@ -16,7 +16,7 @@ graph TD
     Wiki -->|Tailored by Protocol Architect| Protocols[3. Protocols / Personalized Actions]
 ```
 
-1. **Research (Source Discovery):** Discovers literature or internal data, stages files in `sources/`, and logs items in `state.json`.
+1. **Research (Source Discovery):** Discovers literature or internal data, stages files in `sources/`, and logs items in `sources/state.json`.
 2. **Ingest (Synthesis):** Compiles and resolves raw source material into the objective, anonymized `wiki/` knowledge base.
 3. **Build Protocol (Actionable Output):** Adapts objective Wiki knowledge to a user's specific goals, constraints, and physiological parameters in `user/protocols/`.
 
@@ -31,14 +31,14 @@ graph TD
 ├── sources/          # Unified staging area for all raw inputs (literature, code, docs)
 ├── wiki/             # Git Submodule: Synthesized, objective knowledge base (anonymized)
 ├── user/             # Git Submodule: Personal profile, feedback, and active protocols
-└── state.json        # Central execution manifest & ingestion queue
+└── sources/state.json # Central execution manifest & ingestion queue
 ```
 
 ---
 
 ## 🛠 Features & Capabilities
 
-* **Asynchronous Handoffs**: Coordination mediated completely by `state.json` and index updates. No active runtime orchestration is required.
+* **Asynchronous Handoffs**: Coordination mediated completely by `sources/state.json` and index updates. No active runtime orchestration is required.
 * **Model Context Protocol (MCP)**: Native servers (`research-mcp`, `wiki-mcp`, `finance-mcp`) allow LLMs to query databases, search literature, and run portfolio math.
 * **Hermetic Submodules**: The `wiki/` and `user/` directories are decoupled git submodules to ensure clear boundaries between objective knowledge and user-private context.
 
@@ -70,7 +70,7 @@ cp .example.env .env
 Open `.env` and fill in your API credentials (e.g., `SEMANTIC_SCHOLAR_API_KEY`).
 
 ### 3. Connect MCP Servers to your Agent / IDE
-The project defines three MCP servers in `opencode.json`. The servers auto-detect the project root (via `state.json`) and use relative Python paths — no manual path editing required if you use opencode.
+The project defines three MCP servers in `opencode.json`. The servers auto-detect the project root (via `AGENTS.md`) and use relative Python paths — no manual path editing required if you use opencode.
 
 If using Claude Desktop, create equivalent entries referencing your local `.venv/bin/python` and `.agents/mcp/*/server.py` paths.
 

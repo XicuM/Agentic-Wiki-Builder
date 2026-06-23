@@ -8,10 +8,10 @@ metadata: { "openclaw": { "emoji": "📥" } }
 Execute as `synthesis-agent` (multi-agent) or sequentially (single agent).
 
 ## Workflow
-1. **Manifest & Read**: Read `state.json` in the workspace root to identify pending items in the `ingestion_queue` (where `"status": "pending"`). Parse raw source files and target directory `_index.md` files first.
+1. **Manifest & Read**: Read `sources/state.json` in the workspace root to identify pending items in the `ingestion_queue` (where `"status": "pending"`). Parse raw source files and target directory `_index.md` files first.
 2. **Synthesize**: Update or create a relevant note in `wiki/`.
    - **Content Rules**: Document findings, context/limitations, and conflicting evidence. Use callouts (`> ⚠️`) for confidence markers (**Strong consensus**, **Moderate evidence**, or **Preliminary/Contested**), limitations, or if the page relies on a single source (`> ⚠️ This page relies on a single source.`).
-   - **Sole Responsibility**: Your only job is to consume fully extracted Markdown documents from the `state.json` queue, decide how to structure the data, read related wiki articles, and update the wiki accordingly. You are NOT responsible for finding PDFs or converting them to Markdown (that is the `research-agent`'s job, which must always be done using the `markitdown` tool rather than ad-hoc extraction scripts).
+   - **Sole Responsibility**: Your only job is to consume fully extracted Markdown documents from the `sources/state.json` queue, decide how to structure the data, read related wiki articles, and update the wiki accordingly. You are NOT responsible for finding PDFs or converting them to Markdown (that is the `research-agent`'s job, which must always be done using the `markitdown` tool rather than ad-hoc extraction scripts).
     - **Authentic Sources Only**: Only ingest and synthesize from sources that have a verified `original.pdf` or equivalent original raw text file in the repository. If a source file or summary under `sources/` lacks a verified original document and was generated from model memory/data, it must be deleted immediately. Never synthesize wiki entries from unverified sources.
     - **ANONYMIZATION:** Never include user-specific data in `wiki/` or `sources/`. All raw source summaries, metadata, and wiki pages must be completely objective. Never refer to "the user", their specific goals, profile, habits, or private metaphors (e.g., "pills"). Use general, objective conditional logic (e.g., "In individuals with [Trait]...") instead.
     - **CITATIONS:** Footnote every statement using `markdown-it` footnotes pointing to `sources/`. Place definitions at the bottom.
@@ -22,5 +22,5 @@ Execute as `synthesis-agent` (multi-agent) or sequentially (single agent).
    - Update target `_index.md` files (ensure links have one-line summaries and do not contain checkmarks).
    - Rebuild the semantic index using the `wiki_update_index` tool.
    - Run the `lint_check_links` tool to verify the new/updated file's frontmatter and links pass validation.
-   - Remove the ingested item from `state.json`.
+   - Remove the ingested item from `sources/state.json`.
 5. **Commit**: Commit activity using `git commit -m "..."` within the appropriate submodule.

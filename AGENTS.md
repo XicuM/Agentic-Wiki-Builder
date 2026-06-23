@@ -17,7 +17,7 @@ Agents operate as functional layers of the evidence-to-action pipeline:
 ## 2. Filesystem-Driven Handoff Model
 The coordination is asynchronous, mediated by the file structure:
 *   **Staging (`sources/`)**: Ground for raw evidence and metadata.
-*   **Manifest (`state.json`)**: Orchestration queue for pending ingestion.
+*   **Manifest (`sources/state.json`)**: Orchestration queue for pending ingestion.
 *   **Wiki (`wiki/` submodule)**: Objective knowledge base (anonymized, theory-focused).
 *   **User Workspace (`user/` submodule)**: Personalized deliverables (user profiles, feedback, actionable protocols).
 
