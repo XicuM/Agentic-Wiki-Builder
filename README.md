@@ -29,6 +29,7 @@ graph TD
 │   ├── mcp/          # Model Context Protocol (MCP) servers (wiki, research, finance)
 │   └── skills/       # Action packages (ingest, build-protocol, fact-check)
 ├── sources/          # Unified staging area for all raw inputs (literature, code, docs)
+├── tmp/              # Temporary workspace for temporal edits, user additions, and scratchpads
 ├── wiki/             # Git Submodule: Synthesized, objective knowledge base (anonymized)
 ├── user/             # Git Submodule: Personal profile, feedback, and active protocols
 └── sources/state.json # Central execution manifest & ingestion queue

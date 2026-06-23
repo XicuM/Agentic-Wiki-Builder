@@ -25,5 +25,6 @@ from harness.scripts.runtime_gate import check_permission
 
 1. Use `core_io_helper.py` for loading or writing literature text or log files.
 2. Route any command execution or outbound HTTP request through `runtime_gate.py`.
+3. Use the `tmp/` directory in the project root for temporal edits, scratchpad files, or temporary user data additions.
    - **Permission Gate**: The gate blocks unapproved network domains or shell commands. If a script fails with a `PermissionError`, ask the user for verbal approval in the chat.
    - **Bypass Flag**: If the user approves, re-run your script with the `HARNESS_BYPASS_GATE=1` environment variable to bypass the interactive prompt (e.g., `HARNESS_BYPASS_GATE=1 python your_script.py`).

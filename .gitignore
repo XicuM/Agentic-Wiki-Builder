@@ -23,3 +23,6 @@ opencode-sync/
 
 # Copsilot plugin personal session data
 .obsidian/plugins/copsilot/data.json
+
+# Temporary workspace
+tmp/

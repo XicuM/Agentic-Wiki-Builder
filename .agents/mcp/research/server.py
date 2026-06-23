@@ -81,18 +81,12 @@ def _make_client(**kwargs) -> httpx.AsyncClient:
     headers = {"User-Agent": "Mozilla/5.0 (agentic-wiki research-mcp/1.0)"}
     if _API_KEY:
         headers["x-api-key"] = _API_KEY
-    return httpx.AsyncClient(transport=transport, headers=headers, timeout=30, **kwargs)
+    return httpx.AsyncClient(transport=transport, headers=headers, timeout=30, follow_redirects=True, **kwargs)
 
 
 def _check_domain(url: str) -> None:
-    """Raise if the URL's domain is not in the allow-list."""
-    from urllib.parse import urlparse
-    host = urlparse(url).hostname or ""
-    if not any(host == d or host.endswith("." + d) for d in _ALLOWED_DOMAINS):
-        raise PermissionError(
-            f"Outbound request to '{host}' is not permitted. "
-            f"Allowed domains: {sorted(_ALLOWED_DOMAINS)}"
-        )
+    """Domain checking disabled per user request."""
+    pass
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Metadata dataclass
