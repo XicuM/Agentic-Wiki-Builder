@@ -39,7 +39,6 @@ for _p in (_WIKI_DIR,):
 
 # Import lint scripts directly (they expose importable functions)
 import check_links   # noqa: E402
-import backup_sources  # noqa: E402
 
 # ── Server ────────────────────────────────────────────────────────────────────
 
@@ -175,10 +174,7 @@ async def lint_check_links(
     path = ROOT / scope_path
     return await _run_script("check_links.py", str(path))
 
-@mcp.tool()
-async def lint_backup_sources() -> str:
-    """Snapshot sources/ metadata to user/sources_backup.json and report stats."""
-    return await _run_script("backup_sources.py")
+
 
 
 # ─────────────────────────────────────────────────────────────────────────────
