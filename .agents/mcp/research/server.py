@@ -2,10 +2,10 @@
 
 Provides typed async tools for:
   - Searching literature (academic-mcp for multi-provider search)
-  - Downloading papers: fetches metadata, PDF, extracts text via markitdown,
-    writes sources/ directory structure, and updates state.json — all natively
+  - Download papers: fetches metadata, PDF, extracts text via markitdown,
+    writes sources/ directory structure, and updates sources/state.json — all natively
     in async Python with httpx, no subprocess boundary.
-  - CRUD operations on the ingestion queue (state.json)
+  - CRUD operations on the ingestion queue (sources/state.json)
 
 Set PROJECT_ROOT env var to the repository root.
 """
@@ -34,14 +34,14 @@ def _find_root() -> Path:
     if env:
         return Path(env).resolve()
     for parent in Path(__file__).resolve().parents:
-        if (parent / "state.json").exists():
+        if (parent / "AGENTS.md").exists():
             return parent
     raise RuntimeError(
         "Cannot locate project root. Set the PROJECT_ROOT environment variable."
     )
 
 ROOT = _find_root()
-_STATE_PATH = ROOT / "state.json"
+_STATE_PATH = ROOT / "sources" / "state.json"
 _SOURCES_LIT = ROOT / "sources" / "literature"
 
 # API key (Semantic Scholar) — optional
@@ -66,7 +66,7 @@ mcp = FastMCP(
     instructions=(
         "Literature discovery and ingestion server. Use search_literature to find papers, "
         "download_paper to fetch + extract + enqueue them, and queue_* tools to manage "
-        "the ingestion queue in state.json."
+        "the ingestion queue in sources/state.json."
     ),
 )
 
@@ -509,7 +509,7 @@ async def _ingest_paper(
         encoding="utf-8",
     )
 
-    # ── Step 4: update state.json + domain _index.md ─────────────────────────
+    # ── Step 4: update sources/state.json + domain _index.md ─────────────────────────
     await ctx.report_progress(4, 4, "Updating manifest…")
     abstract_summary = (meta.abstract or "").replace("\n", " ").strip()[:200]
     if len(meta.abstract or "") > 200:
@@ -637,7 +637,7 @@ async def download_paper(
       1. Fetch metadata from the appropriate provider
       2. Download the open-access PDF (with Unpaywall fallback)
       3. Extract text via markitdown → raw.md
-      4. Write metadata.md and update state.json + domain _index.md
+      4. Write metadata.md and update sources/state.json + domain _index.md
 
     Returns paths to the created files. The agent should then git commit.
     Does NOT add failed papers to the manifest — halts and raises on any error.
@@ -655,7 +655,7 @@ async def download_paper(
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# MCP Tools — Ingestion Queue (state.json CRUD)
+# MCP Tools — Ingestion Queue (sources/state.json CRUD)
 # ─────────────────────────────────────────────────────────────────────────────
 
 def _read_state() -> dict:
@@ -675,7 +675,7 @@ async def queue_list(
         "Filter by status (default: all)",
     ] = "all",
 ) -> list[dict]:
-    """List items in the ingestion queue from state.json, optionally filtered by status."""
+    """List items in the ingestion queue from sources/state.json, optionally filtered by status."""
     async with _state_lock:
         state = _read_state()
     queue = state.get("ingestion_queue", [])
@@ -692,7 +692,7 @@ async def queue_enqueue(
     summary: Annotated[str, "One-line summary of the source"],
     tags: Annotated[list[str], "Domain tags (e.g. ['nutrition', 'sleep'])"],
 ) -> dict:
-    """Append an item to the ingestion queue in state.json."""
+    """Append an item to the ingestion queue in sources/state.json."""
     async with _state_lock:
         state = _read_state()
         queue = state.setdefault("ingestion_queue", [])
@@ -716,7 +716,7 @@ async def queue_enqueue(
 async def queue_dequeue(
     id: Annotated[str, "ID of the queue item to remove after successful ingestion"],
 ) -> dict:
-    """Remove a completed item from the ingestion queue in state.json."""
+    """Remove a completed item from the ingestion queue in sources/state.json."""
     async with _state_lock:
         state = _read_state()
         queue = state.get("ingestion_queue", [])
@@ -734,7 +734,7 @@ async def queue_dequeue(
 
 @mcp.resource("research://state")
 def resource_state() -> str:
-    """Live contents of state.json (ingestion queue manifest)."""
+    """Live contents of sources/state.json (ingestion queue manifest)."""
     return _STATE_PATH.read_text(encoding="utf-8") if _STATE_PATH.exists() else "{}"
 
 

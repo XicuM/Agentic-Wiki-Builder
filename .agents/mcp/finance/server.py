@@ -21,10 +21,10 @@ def _find_root() -> Path:
     env = os.environ.get("PROJECT_ROOT")
     if env:
         return Path(env).resolve()
-    # Auto-detect: walk up from this file looking for state.json
+    # Auto-detect: walk up from this file looking for AGENTS.md
     here = Path(__file__).resolve()
     for parent in here.parents:
-        if (parent / "state.json").exists():
+        if (parent / "AGENTS.md").exists():
             return parent
     raise RuntimeError(
         "Cannot locate project root. Set the PROJECT_ROOT environment variable."

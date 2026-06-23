@@ -1,34 +1,35 @@
 {
   "mcpServers": {
     "finance-mcp": {
-      "command": "/home/xicu/Projects/agentic-wiki-builder/.venv/bin/python",
-      "args": ["/home/xicu/Projects/agentic-wiki-builder/.agents/mcp/finance/server.py"],
+      "command": ".venv/bin/python",
+      "args": [".agents/mcp/finance/server.py"],
       "env": {
-        "PROJECT_ROOT": "/home/xicu/Projects/agentic-wiki-builder"
+        "PROJECT_ROOT": "."
       }
     },
     "wiki-mcp": {
-      "command": "/home/xicu/Projects/agentic-wiki-builder/.venv/bin/python",
-      "args": ["/home/xicu/Projects/agentic-wiki-builder/.agents/mcp/wiki/server.py"],
+      "command": ".venv/bin/python",
+      "args": [".agents/mcp/wiki/server.py"],
       "env": {
-        "PROJECT_ROOT": "/home/xicu/Projects/agentic-wiki-builder"
+        "PROJECT_ROOT": "."
       }
     },
     "research-mcp": {
-      "command": "/home/xicu/Projects/agentic-wiki-builder/.venv/bin/python",
-      "args": ["/home/xicu/Projects/agentic-wiki-builder/.agents/mcp/research/server.py"],
+      "command": ".venv/bin/python",
+      "args": [".agents/mcp/research/server.py"],
       "env": {
-        "PROJECT_ROOT": "/home/xicu/Projects/agentic-wiki-builder",
+        "PROJECT_ROOT": ".",
         "SEMANTIC_SCHOLAR_API_KEY": "s2k-XTBRJLNoBc6Ldi0WmwsVcMsSoChlw3A93h7S1Yrk"
       }
     },
     "menumaker": {
-      "command": "/home/xicu/Projects/agentic-wiki-builder/.venv/bin/python",
+      "command": "../menumaker-mcp/.venv/bin/python",
       "args": [
-        "/home/xicu/Projects/agentic-wiki-builder/.agents/mcp/menumaker/server.py"
+        "-m",
+        "menumaker.server"
       ],
       "env": {
-        "MENUMAKER_DATA_DIR": "/home/xicu/Projects/agentic-wiki-builder/.agents/mcp/menumaker/data"
+        "MENUMAKER_DATA_DIR": "../menumaker-mcp/.agents/mcp/data"
       }
     }
   }
