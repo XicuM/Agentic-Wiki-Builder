@@ -21,6 +21,15 @@
         "PROJECT_ROOT": "/home/xicu/Projects/agentic-wiki-builder",
         "SEMANTIC_SCHOLAR_API_KEY": "s2k-XTBRJLNoBc6Ldi0WmwsVcMsSoChlw3A93h7S1Yrk"
       }
+    },
+    "menumaker": {
+      "command": "/home/xicu/Projects/agentic-wiki-builder/.venv/bin/python",
+      "args": [
+        "/home/xicu/Projects/agentic-wiki-builder/.agents/mcp/menumaker/server.py"
+      ],
+      "env": {
+        "MENUMAKER_DATA_DIR": "/home/xicu/Projects/agentic-wiki-builder/.agents/mcp/menumaker/data"
+      }
     }
   }
 }

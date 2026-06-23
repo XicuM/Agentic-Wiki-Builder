@@ -128,8 +128,6 @@
 .copsilot-msg.assistant:hover .copsilot-msg-copy {
   display: block;
 }
-  line-height: 1.6;
-}
 
 /* Thinking */
 .copsilot-thinking {
@@ -608,8 +606,6 @@
 .copsilot-perm-pill.mod-safe .copsilot-perm-label { color: var(--text-success); }
 .copsilot-perm-pill.mod-plan .copsilot-perm-label { color: var(--text-accent); }
 .copsilot-perm-pill.mod-yolo .copsilot-perm-label { color: var(--text-warning); }
-  white-space: nowrap;
-}
 
 /* Context arc meter — semicircle gauge */
 .copsilot-arc-meter {

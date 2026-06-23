@@ -11,3 +11,14 @@ torch
 mcp[cli]
 httpx
 academic-mcp
+pandas>=2.0
+scipy>=1.10
+PyYAML>=6.0
+rapidfuzz>=3.0
+requests>=2.28
+requests_html>=0.10
+beautifulsoup4>=4.12
+lxml>=5.0
+mercapy>=1.0
+matplotlib>=3.7
+html5lib>=1.1

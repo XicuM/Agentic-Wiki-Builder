@@ -26,6 +26,16 @@
       "environment": {
         "SEMANTIC_SCHOLAR_API_KEY": ""
       }
+    },
+    "menumaker": {
+      "type": "local",
+      "command": [
+        ".venv/bin/python",
+        ".agents/mcp/menumaker/server.py"
+      ],
+      "environment": {
+        "MENUMAKER_DATA_DIR": "/home/xicu/Projects/agentic-wiki-builder/.agents/mcp/menumaker/data"
+      }
     }
   }
 }

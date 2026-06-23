@@ -11,5 +11,14 @@ logs/
 # OpenCode runtime sync files
 opencode-sync/
 
+# Obsidian personal workspace data
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/workspace-*.json
+.obsidian/bookmarks.json
+.obsidian/starred.json
+.obsidian/recent-files.json
+.obsidian/backlink-cache.json
+
 # Copsilot plugin personal session data
 .obsidian/plugins/copsilot/data.json
