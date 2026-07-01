@@ -1,4 +1,8 @@
 {
-  "accentColor": "#b4968f",
-  "cssTheme": ""
+  "accentColor": "#456094",
+  "cssTheme": "Notation Material Slate",
+  "theme": "moonstone",
+  "enabledCssSnippets": [
+    "hide-folders"
+  ]
 }

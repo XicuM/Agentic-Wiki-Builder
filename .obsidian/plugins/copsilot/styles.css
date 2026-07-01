@@ -1,13 +1,15 @@
-/* Copsilot — main styles */
+/* Co-Ober — main styles */
 
-.copsilot-view {
+.co-ober-view {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
   overflow: hidden;
 }
 
-.copsilot-header {
+.co-ober-header {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -17,58 +19,47 @@
   min-height: 32px;
 }
 
-.copsilot-header .copsilot-arc-meter {
-  margin-left: auto;
+.co-ober-header .co-ober-arc-meter {
   flex-shrink: 0;
 }
 
-.copsilot-header-actions {
+.co-ober-header-title {
+  font-weight: 600;
+  font-size: var(--font-ui-medium);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.co-ober-header-actions {
   display: flex;
   gap: 4px;
   align-items: center;
   flex: 1;
   min-width: 0;
+  justify-content: flex-end;
 }
 
-.copsilot-new-btn {
-  border: none;
-  background: none;
-  padding: 1px 2px;
-  color: var(--text-muted);
-  cursor: pointer;
-  font-size: var(--font-smaller);
-  line-height: 1.4;
-  font-weight: 600;
-}
-.copsilot-new-btn:hover {
-  color: var(--text-accent);
-}
-
-.copsilot-session-btn {
-  flex: 1;
-  min-width: 0;
-  cursor: pointer;
-  font-size: var(--font-smaller);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  line-height: 1.4;
-  font-weight: 500;
+.co-ober-header-actions .mod-icon {
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-s);
+  padding: 4px 8px;
   color: var(--text-normal);
-  user-select: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }
-.copsilot-session-btn:hover {
-  color: var(--text-accent);
+.co-ober-header-actions .mod-icon svg {
+  width: 16px;
+  height: 16px;
 }
-.copsilot-session-btn::after {
-  content: ' ▾';
-  font-size: 8px;
-  color: var(--text-muted);
-  font-weight: 400;
+
+.co-ober-header-actions .mod-icon:hover {
+  background: var(--background-modifier-hover);
 }
 
 /* Messages */
-.copsilot-messages {
+.co-ober-messages {
   flex: 1;
   overflow-y: auto;
   padding: 12px;
@@ -77,13 +68,13 @@
   gap: 12px;
 }
 
-.copsilot-msg {
+.co-ober-msg {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.copsilot-msg.user .copsilot-msg-body {
+.co-ober-msg.user .co-ober-msg-body {
   background: var(--interactive-accent);
   color: var(--text-on-accent);
   padding: 6px 10px;
@@ -109,7 +100,7 @@
   color: var(--text-accent);
 }
 
-.copsilot-msg.assistant .copsilot-msg-body {
+.co-ober-msg.assistant .co-ober-msg-body {
   background: var(--background-secondary);
   padding: 6px 10px;
   border-radius: 12px 12px 12px 4px;
@@ -128,15 +119,17 @@
 .copsilot-msg.assistant:hover .copsilot-msg-copy {
   display: block;
 }
+  line-height: 1.6;
+}
 
 /* Thinking */
-.copsilot-thinking {
+.co-ober-thinking {
   border: 1px dashed var(--background-modifier-border);
   border-radius: var(--radius-s);
   overflow: hidden;
 }
 
-.copsilot-thinking-header {
+.co-ober-thinking-header {
   padding: 4px 10px;
   font-size: var(--font-smaller);
   color: var(--text-muted);
@@ -144,7 +137,7 @@
   user-select: none;
 }
 
-.copsilot-thinking-body {
+.co-ober-thinking-body {
   padding: 8px 10px;
   font-size: var(--font-smaller);
   color: var(--text-muted);
@@ -153,13 +146,13 @@
 }
 
 /* Tool calls */
-.copsilot-tool-call {
+.co-ober-tool-call {
   border: 1px solid var(--background-modifier-border);
   border-radius: var(--radius-s);
   overflow: hidden;
 }
 
-.copsilot-tool-call-header {
+.co-ober-tool-call-header {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -169,18 +162,18 @@
   font-size: var(--font-smaller);
 }
 
-.copsilot-tool-call-header .tc-icon {
+.co-ober-tool-call-header .tc-icon {
   display: flex;
   align-items: center;
   flex-shrink: 0;
   color: var(--text-accent);
 }
-.copsilot-tool-call-header .tc-icon svg {
+.co-ober-tool-call-header .tc-icon svg {
   width: 14px;
   height: 14px;
 }
 
-.copsilot-tool-call-header .tc-kind {
+.co-ober-tool-call-header .tc-kind {
   font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
@@ -189,7 +182,7 @@
   min-width: 32px;
 }
 
-.copsilot-tool-call-header .tc-file {
+.co-ober-tool-call-header .tc-file {
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -199,28 +192,31 @@
   font-size: var(--font-smaller);
 }
 
-.copsilot-tool-call-header .tc-file.is-clickable {
-  cursor: pointer;
-  text-decoration: underline;
-  text-decoration-style: dotted;
-  text-underline-offset: 2px;
-}
-
-.copsilot-tool-call-header .tc-file.is-clickable:hover {
-  color: var(--text-accent);
-}
-
-.copsilot-tool-call-header .tc-stat {
+.co-ober-tool-call-header .tc-stat {
   flex-shrink: 0;
-  font-size: 10px;
+  display: flex;
+  align-items: center;
   color: var(--text-muted);
-  font-family: var(--font-monospace);
 }
 
-.copsilot-tool-call-header .tc-stat-done { color: #22c55e; }
-.copsilot-tool-call-header .tc-stat-fail { color: var(--text-error); }
+.co-ober-tool-call-header .tc-stat svg {
+  width: 14px;
+  height: 14px;
+}
 
-.copsilot-tool-call-body {
+.co-ober-tool-call-header .tc-stat.tc-stat-done { color: #22c55e; }
+.co-ober-tool-call-header .tc-stat.tc-stat-fail { color: var(--text-error); }
+
+.co-ober-tool-call-header .tc-stat.spin svg {
+  animation: co-ober-spin 1.5s linear infinite;
+}
+
+@keyframes co-ober-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.co-ober-tool-call-body {
   padding: 8px 10px;
   font-size: var(--font-smaller);
   overflow-x: auto;
@@ -230,38 +226,38 @@
 }
 
 /* Plan */
-.copsilot-plan-panel {
+.co-ober-plan-panel {
   border: 1px solid var(--background-modifier-border);
   border-radius: var(--radius-s);
   padding: 8px 12px;
 }
 
-.copsilot-plan-panel .plan-title {
+.co-ober-plan-panel .plan-title {
   font-weight: 600;
   font-size: var(--font-smaller);
   margin-bottom: 6px;
 }
 
-.copsilot-plan-panel .plan-item {
+.co-ober-plan-panel .plan-item {
   font-size: var(--font-smaller);
   padding: 2px 0;
 }
 
-.copsilot-plan-panel .status-completed {
+.co-ober-plan-panel .status-completed {
   color: var(--text-faint);
   text-decoration: line-through;
 }
 
-.copsilot-plan-panel .status-in_progress {
+.co-ober-plan-panel .status-in_progress {
   color: var(--text-accent);
 }
 
-.copsilot-plan-panel .status-todo {
+.co-ober-plan-panel .status-todo {
   color: var(--text-muted);
 }
 
 /* Loading */
-.copsilot-loading {
+.co-ober-loading {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -270,21 +266,21 @@
   font-size: var(--font-smaller);
 }
 
-.copsilot-spinner {
+.co-ober-spinner {
   width: 14px;
   height: 14px;
   border: 2px solid var(--background-modifier-border);
   border-top-color: var(--text-accent);
   border-radius: 50%;
-  animation: copsilot-spin 0.8s linear infinite;
+  animation: co-ober-spin 0.8s linear infinite;
 }
 
-@keyframes copsilot-spin {
+@keyframes co-ober-spin {
   to { transform: rotate(360deg); }
 }
 
 /* Error */
-.copsilot-error {
+.co-ober-error {
   padding: 8px 12px;
   color: var(--text-error);
   font-size: var(--font-smaller);
@@ -293,7 +289,7 @@
 }
 
 /* Context chips */
-.copsilot-context-chips {
+.co-ober-context-chips {
   display: flex;
   flex-wrap: wrap;
   gap: 3px;
@@ -302,11 +298,11 @@
   min-height: 0;
 }
 
-.copsilot-context-chips:empty {
+.co-ober-context-chips:empty {
   display: none;
 }
 
-.copsilot-chip {
+.co-ober-chip {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -316,43 +312,65 @@
   padding: 2px 6px;
   font-size: var(--font-smaller);
   user-select: none;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
-.copsilot-chip:hover {
+.co-ober-chip:hover {
   background: var(--background-modifier-hover);
 }
 
-.copsilot-chip .chip-remove {
+.co-ober-chip > span:not(.chip-remove) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.co-ober-chip .chip-remove {
   color: var(--text-muted);
   cursor: pointer;
   line-height: 1;
   padding: 0 1px;
+  flex-shrink: 0;
 }
 
-.copsilot-chip .chip-remove:hover {
+.co-ober-chip .chip-remove:hover {
   color: var(--text-error);
 }
 
 /* Toolbar (below input) — single row */
-.copsilot-toolbar {
+.co-ober-toolbar {
   display: flex;
   padding: 4px 8px 6px;
   flex-shrink: 0;
   background: var(--background-primary);
+  border-top: 1px solid var(--background-modifier-border);
 }
 
-.copsilot-contextbar-row .copsilot-model-selector {
+.co-ober-toolbar-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.co-ober-toolbar-row .co-ober-model-selector {
   flex: 1;
   min-width: 0;
 }
 
+.co-ober-toolbar-row .co-ober-send-btn {
+  margin-left: auto;
+}
+
 /* Effort selector (custom hover dropdown) */
-.copsilot-effort-selector {
+.co-ober-effort-selector {
   position: relative;
   flex-shrink: 0;
 }
 
-.copsilot-effort-btn {
+.co-ober-effort-btn {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -364,16 +382,16 @@
   transition: color 0.1s ease;
 }
 
-.copsilot-effort-btn:hover {
+.co-ober-effort-btn:hover {
   color: var(--text-normal);
 }
 
-.copsilot-effort-label {
+.co-ober-effort-label {
   font-weight: 500;
   white-space: nowrap;
 }
 
-.copsilot-effort-dropdown {
+.co-ober-effort-dropdown {
   position: absolute;
   bottom: 100%;
   left: 0;
@@ -394,12 +412,12 @@
   transition: opacity 0.15s ease, visibility 0.15s ease;
 }
 
-.copsilot-effort-selector:hover .copsilot-effort-dropdown {
+.co-ober-effort-selector:hover .co-ober-effort-dropdown {
   opacity: 1;
   visibility: visible;
 }
 
-.copsilot-effort-option {
+.co-ober-effort-option {
   padding: 3px 8px;
   cursor: pointer;
   font-size: 11px;
@@ -409,31 +427,31 @@
   white-space: nowrap;
 }
 
-.copsilot-effort-option:hover {
+.co-ober-effort-option:hover {
   background: var(--background-modifier-hover);
   color: var(--text-normal);
 }
 
-.copsilot-effort-option.selected {
+.co-ober-effort-option.selected {
   background: rgba(var(--interactive-accent-rgb), 0.15);
   color: var(--text-accent);
   font-weight: 500;
 }
 
-.copsilot-effort-option.empty {
+.co-ober-effort-option.empty {
   color: var(--text-faint);
   cursor: default;
   pointer-events: none;
 }
 
 /* Model selector (custom dropdown) */
-.copsilot-model-selector {
+.co-ober-model-selector {
   position: relative;
   flex: 1;
   min-width: 0;
 }
 
-.copsilot-model-btn {
+.co-ober-model-btn {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -447,19 +465,19 @@
   transition: color 0.1s ease, border-color 0.1s ease;
 }
 
-.copsilot-model-btn:hover {
+.co-ober-model-btn:hover {
   color: var(--text-normal);
   border-color: var(--text-accent);
 }
 
-.copsilot-model-label {
+.co-ober-model-label {
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.copsilot-model-dropdown {
+.co-ober-model-dropdown {
   position: absolute;
   bottom: 100%;
   left: 0;
@@ -482,12 +500,12 @@
   transition: opacity 0.15s ease, visibility 0.15s ease;
 }
 
-.copsilot-model-selector.is-open .copsilot-model-dropdown {
+.co-ober-model-selector:hover .co-ober-model-dropdown {
   opacity: 1;
   visibility: visible;
 }
 
-.copsilot-model-group {
+.co-ober-model-group {
   padding: 3px 8px;
   font-size: 10px;
   font-weight: 600;
@@ -497,13 +515,13 @@
   pointer-events: none;
 }
 
-.copsilot-model-group:not(:first-child) {
+.co-ober-model-group:not(:first-child) {
   margin-top: 4px;
   border-top: 1px solid var(--background-modifier-border);
   padding-top: 6px;
 }
 
-.copsilot-model-option {
+.co-ober-model-option {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -516,25 +534,25 @@
   white-space: nowrap;
 }
 
-.copsilot-model-option:hover {
+.co-ober-model-option:hover {
   background: var(--background-modifier-hover);
   color: var(--text-normal);
 }
 
-.copsilot-model-option.selected {
+.co-ober-model-option.selected {
   background: rgba(var(--interactive-accent-rgb), 0.15);
   color: var(--text-accent);
   font-weight: 500;
 }
 
-.copsilot-model-option.empty {
+.co-ober-model-option.empty {
   color: var(--text-faint);
   cursor: default;
   pointer-events: none;
 }
 
 /* Mode cycle button */
-.copsilot-mode-pill {
+.co-ober-mode-cycle {
   display: flex;
   align-items: center;
   padding: 1px 8px;
@@ -547,38 +565,22 @@
   white-space: nowrap;
   flex-shrink: 0;
 }
-.copsilot-mode-pill.has-options {
-  cursor: pointer;
-}
-.copsilot-mode-pill.has-options:hover {
+
+.co-ober-mode-cycle:hover {
   color: var(--text-normal);
   border-color: var(--text-accent);
 }
-.copsilot-mode-pill-label {
+
+.co-ober-mode-cycle.has-options {
+  cursor: pointer;
+}
+
+.co-ober-mode-cycle-label {
   font-weight: 500;
 }
 
-.copsilot-perm-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 12px;
-  flex-shrink: 0;
-  margin-left: auto;
-  background: var(--background-secondary);
-}
-.copsilot-perm-icon:hover {
-  background: var(--background-modifier-hover);
-}
-.copsilot-perm-icon.mod-safe { color: var(--text-success); }
-.copsilot-perm-icon.mod-plan { color: var(--text-accent); }
-.copsilot-perm-icon.mod-yolo { color: var(--text-warning); }
-
-.copsilot-perm-pill {
+/* Permission toggle */
+.co-ober-perm-toggle {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -587,6 +589,27 @@
   border: 1px solid var(--background-modifier-border);
   border-radius: 10px;
   cursor: pointer;
+  transition: border-color 0.1s ease, color 0.1s ease;
+  flex-shrink: 0;
+}
+
+.co-ober-perm-toggle:hover {
+  border-color: var(--text-accent);
+}
+
+.co-ober-perm-toggle.mod-safe {
+  color: var(--text-success);
+}
+
+.co-ober-perm-toggle.mod-plan {
+  color: var(--text-accent);
+}
+
+.co-ober-perm-toggle.mod-yolo {
+  color: var(--text-warning);
+}
+
+.co-ober-perm-label {
   font-size: var(--font-smaller);
   flex-shrink: 0;
   background: var(--background-secondary);
@@ -606,9 +629,11 @@
 .copsilot-perm-pill.mod-safe .copsilot-perm-label { color: var(--text-success); }
 .copsilot-perm-pill.mod-plan .copsilot-perm-label { color: var(--text-accent); }
 .copsilot-perm-pill.mod-yolo .copsilot-perm-label { color: var(--text-warning); }
+  white-space: nowrap;
+}
 
 /* Context arc meter — semicircle gauge */
-.copsilot-arc-meter {
+.co-ober-arc-meter {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -617,26 +642,28 @@
   transition: opacity 0.2s ease;
 }
 
-.copsilot-arc-meter.empty {
+.co-ober-arc-meter.empty {
   opacity: 0.4;
 }
 
-.copsilot-arc-svg {
-  width: 24px;
-  height: 24px;
+.co-ober-arc-svg {
+  width: 32px;
+  height: 20px;
   overflow: visible;
 }
 
-.copsilot-arc-track {
+.co-ober-arc-track {
+  fill: none;
   stroke: var(--background-modifier-border);
 }
 
-.copsilot-arc-fill {
+.co-ober-arc-fill {
+  fill: none;
   stroke: var(--text-accent);
   transition: stroke-dasharray 0.4s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.2s ease;
 }
 
-.copsilot-arc-pct {
+.co-ober-arc-pct {
   font-size: 10px;
   font-weight: 600;
   font-family: var(--font-interface);
@@ -645,32 +672,32 @@
 }
 
 /* Warning state (75-89%) */
-.copsilot-arc-meter.warning .copsilot-arc-fill {
+.co-ober-arc-meter.warning .co-ober-arc-fill {
   stroke: var(--text-warning);
 }
 
-.copsilot-arc-meter.warning .copsilot-arc-pct {
-  fill: var(--text-warning);
+.co-ober-arc-meter.warning .co-ober-arc-pct {
+  color: var(--text-warning);
 }
 
 /* Critical state (90%+) */
-.copsilot-arc-meter.critical .copsilot-arc-fill {
+.co-ober-arc-meter.critical .co-ober-arc-fill {
   stroke: var(--text-error);
-  animation: copsilot-arc-pulse 1.5s ease-in-out infinite;
+  animation: co-ober-arc-pulse 1.5s ease-in-out infinite;
 }
 
-.copsilot-arc-meter.critical .copsilot-arc-pct {
-  fill: var(--text-error);
+.co-ober-arc-meter.critical .co-ober-arc-pct {
+  color: var(--text-error);
   font-weight: 700;
 }
 
-@keyframes copsilot-arc-pulse {
+@keyframes co-ober-arc-pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.7; }
 }
 
 /* Tooltip on hover */
-.copsilot-arc-meter[data-tooltip]:hover::after {
+.co-ober-arc-meter[data-tooltip]:hover::after {
   content: attr(data-tooltip);
   position: absolute;
   top: 100%;
@@ -690,24 +717,28 @@
   pointer-events: none;
 }
 
-.copsilot-toolbar .copsilot-send-btn {
+.co-ober-toolbar .co-ober-send-btn {
   background: var(--interactive-accent);
   color: var(--text-on-accent);
   border: none;
   border-radius: var(--radius-s);
-  padding: 4px 14px;
+  padding: 4px 10px;
   cursor: pointer;
-  font-size: var(--font-ui-small);
-  font-weight: 500;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+.co-ober-toolbar .co-ober-send-btn svg {
+  width: 16px;
+  height: 16px;
 }
 
-.copsilot-toolbar .copsilot-send-btn:hover { opacity: 0.85; }
-.copsilot-toolbar .copsilot-send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-.copsilot-toolbar .copsilot-send-btn.mod-stop { background: var(--text-error); }
+.co-ober-toolbar .co-ober-send-btn:hover { opacity: 0.85; }
+.co-ober-toolbar .co-ober-send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.co-ober-toolbar .co-ober-send-btn.mod-stop { background: var(--text-error); }
 
-/* Input area */
-.copsilot-input-area {
+/* Input */
+.co-ober-input-area {
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -717,30 +748,33 @@
   position: relative;
 }
 
-.copsilot-contextbar-wrap {
+.co-ober-input-resize-handle {
+  height: 5px;
+  cursor: ns-resize;
+  background: transparent;
   flex-shrink: 0;
-  margin-top: 6px;
-}
-.copsilot-contextbar {
-  flex-shrink: 0;
-}
-.copsilot-contextbar-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 
-.copsilot-input-row {
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
+.co-ober-input-resize-handle:hover,
+.co-ober-input-resize-handle.dragging {
+  background: var(--text-accent);
+  opacity: 0.4;
 }
-.copsilot-input-area .copsilot-input {
+
+.co-ober-input-row {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  flex: 1;
+  min-height: 0;
+}
+
+.co-ober-input-area .co-ober-input {
   flex: 1;
   resize: none;
-  overflow: hidden;
+  overflow: auto;
   min-height: 28px;
-  max-height: 200px;
+  height: 100%;
   font-size: var(--font-ui-small);
   line-height: 1.4;
   border: 1px solid var(--background-modifier-border);
@@ -778,12 +812,12 @@
 }
 
 /* Autocomplete dropdown */
-.copsilot-ac-dropdown {
+.co-ober-ac-dropdown {
   position: absolute;
   bottom: calc(100% + 6px);
   left: 8px;
   right: 8px;
-  max-height: 240px;
+  max-height: 280px;
   overflow-y: auto;
   background: var(--background-primary);
   border: 1px solid var(--background-modifier-border);
@@ -793,34 +827,83 @@
   font-size: var(--font-smaller);
 }
 
-.copsilot-ac-dropdown .copsilot-ac-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.co-ober-ac-dropdown .co-ober-ac-item {
   padding: 4px 10px;
   cursor: pointer;
 }
 
-.copsilot-ac-dropdown .copsilot-ac-item.selected {
+.co-ober-ac-dropdown .co-ober-ac-item.selected {
   background: var(--background-modifier-hover);
 }
 
-.copsilot-ac-dropdown .ac-label {
+.co-ober-ac-dropdown .ac-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.co-ober-ac-dropdown .ac-row-sub {
+  margin-top: 1px;
+  font-size: calc(var(--font-smaller) - 1px);
+}
+
+.co-ober-ac-dropdown .ac-label {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  flex: 1;
 }
 
-.copsilot-ac-dropdown .ac-desc {
+.co-ober-ac-dropdown .ac-desc {
   color: var(--text-muted);
-  font-size: var(--font-smaller);
-  margin-left: 8px;
+  font-size: calc(var(--font-smaller) - 1px);
   flex-shrink: 0;
 }
 
+.co-ober-ac-dropdown .ac-arg-hint {
+  color: var(--text-faint);
+  font-style: italic;
+  margin-right: 4px;
+  flex-shrink: 0;
+}
+
+.co-ober-ac-dropdown .ac-badge {
+  font-size: calc(var(--font-smaller) - 1px);
+  padding: 0 4px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.co-ober-ac-dropdown .ac-badge-builtin {
+  color: var(--text-muted);
+  background: var(--background-modifier-border);
+}
+
+.co-ober-ac-dropdown .ac-badge-acp {
+  color: var(--text-accent);
+  background: var(--tag-background);
+}
+
+.co-ober-ac-dropdown .ac-badge-custom {
+  color: var(--color-green);
+  background: var(--tag-background);
+}
+
+.co-ober-ac-dropdown .ac-badge-mcp {
+  color: var(--color-orange);
+  background: var(--tag-background);
+}
+
+.co-ober-ac-dropdown .ac-badge-skill {
+  color: var(--color-purple);
+  background: var(--tag-background);
+}
+
 /* Session list */
-.copsilot-session-list {
+.co-ober-session-list {
   position: fixed;
+  top: var(--dropdown-top);
+  right: var(--dropdown-right);
   width: 320px;
   max-height: 400px;
   overflow-y: auto;
@@ -832,7 +915,7 @@
   padding: 4px 0;
 }
 
-.copsilot-session-item {
+.co-ober-session-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -841,16 +924,16 @@
   font-size: var(--font-smaller);
 }
 
-.copsilot-session-item .session-label {
+.co-ober-session-item .session-label {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   flex: 1;
 }
 
-.copsilot-session-item .session-fork,
-.copsilot-session-item .session-resume,
-.copsilot-session-item .session-delete {
+.co-ober-session-item .session-fork,
+.co-ober-session-item .session-resume,
+.co-ober-session-item .session-delete {
   opacity: 0;
   margin-left: 8px;
   color: var(--text-muted);
@@ -861,34 +944,34 @@
   flex-shrink: 0;
 }
 
-.copsilot-session-item .session-delete {
+.co-ober-session-item .session-delete {
   color: var(--text-error);
   font-weight: bold;
 }
 
-.copsilot-session-item .is-disabled {
+.co-ober-session-item .is-disabled {
   cursor: not-allowed;
   opacity: 0.4;
 }
 
-.copsilot-session-item:hover .session-fork,
-.copsilot-session-item:hover .session-resume,
-.copsilot-session-item:hover .session-delete {
+.co-ober-session-item:hover .session-fork,
+.co-ober-session-item:hover .session-resume,
+.co-ober-session-item:hover .session-delete {
   opacity: 1;
 }
 
-.copsilot-session-item:hover {
+.co-ober-session-item:hover {
   background: var(--background-modifier-hover);
 }
 
-.copsilot-session-item.active {
+.co-ober-session-item.active {
   background: var(--background-modifier-hover);
   font-weight: 500;
 }
 
 /* Settings enhancements */
-.copsilot-sync-rule,
-.copsilot-mcp-server {
+.co-ober-sync-rule,
+.co-ober-mcp-server {
   border: 1px solid var(--background-modifier-border);
   border-radius: var(--radius-s);
   padding: 8px;
@@ -896,45 +979,14 @@
   background: var(--background-secondary);
 }
 
-.copsilot-sync-rule strong,
-.copsilot-mcp-server strong {
+.co-ober-sync-rule strong,
+.co-ober-mcp-server strong {
   display: block;
   margin-bottom: 8px;
 }
 
-.copsilot-mcp-server-heading {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 8px;
-}
-
-.copsilot-mcp-server-heading strong {
-  display: inline;
-  margin-bottom: 0;
-}
-
-.copsilot-mcp-status-dot {
-  font-size: 10px;
-  line-height: 1;
-  flex-shrink: 0;
-}
-
-.copsilot-mcp-status-label {
-  font-size: var(--font-ui-smaller);
-  color: var(--text-muted);
-  margin-left: auto;
-  flex-shrink: 0;
-}
-
-.copsilot-mcp-discovered-desc {
-  font-size: var(--font-ui-smaller);
-  color: var(--text-muted);
-  margin-top: 4px;
-}
-
-.copsilot-sync-rule .mod-warning,
-.copsilot-mcp-server .mod-warning {
+.co-ober-sync-rule .mod-warning,
+.co-ober-mcp-server .mod-warning {
   background: var(--background-modifier-error);
   color: var(--text-on-accent);
   border: none;
@@ -945,11 +997,11 @@
   margin-top: 8px;
 }
 
-.copsilot-mcp-args {
+.co-ober-mcp-args {
   font-family: var(--font-monospace);
 }
 
-.copsilot-reconnect-btn {
+.co-ober-reconnect-btn {
   position: sticky;
   top: 0;
   z-index: 10;
@@ -963,38 +1015,38 @@
   text-align: center;
 }
 
-.copsilot-reconnect-btn:disabled {
+.co-ober-reconnect-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
 /* Permission banner */
-.copsilot-permission-banner {
+.co-ober-permission-banner {
   border: 1px solid var(--text-accent);
   border-radius: var(--radius-s);
   padding: 10px 12px;
   background: var(--background-secondary);
 }
 
-.copsilot-permission-banner .perm-title {
+.co-ober-permission-banner .perm-title {
   font-weight: 600;
   font-size: var(--font-ui-small);
   margin-bottom: 4px;
 }
 
-.copsilot-permission-banner .perm-path {
+.co-ober-permission-banner .perm-path {
   font-size: var(--font-smaller);
   color: var(--text-muted);
   margin-bottom: 8px;
   font-family: var(--font-editor);
 }
 
-.copsilot-permission-banner .perm-actions {
+.co-ober-permission-banner .perm-actions {
   display: flex;
   gap: 6px;
 }
 
-.copsilot-permission-banner .perm-btn {
+.co-ober-permission-banner .perm-btn {
   border: 1px solid var(--background-modifier-border);
   border-radius: var(--radius-s);
   padding: 4px 10px;
@@ -1003,26 +1055,26 @@
   background: var(--background-primary);
 }
 
-.copsilot-permission-banner .perm-allow_once {
+.co-ober-permission-banner .perm-allow_once {
   background: var(--text-accent);
   color: var(--text-on-accent);
   border-color: var(--text-accent);
 }
 
-.copsilot-permission-banner .perm-allow_always {
+.co-ober-permission-banner .perm-allow_always {
   background: var(--background-primary);
   color: var(--text-accent);
   border-color: var(--text-accent);
 }
 
-.copsilot-permission-banner .perm-reject_once {
+.co-ober-permission-banner .perm-reject_once {
   background: var(--background-primary);
   color: var(--text-error);
   border-color: var(--text-error);
 }
 
 /* Usage stats */
-.copsilot-usage {
+.co-ober-usage {
   text-align: right;
   font-size: 11px;
   color: var(--text-muted);
@@ -1031,12 +1083,12 @@
   cursor: default;
 }
 
-.copsilot-usage:hover {
+.co-ober-usage:hover {
   color: var(--text-normal);
 }
 
 /* Code block copy button */
-.copsilot-copy-btn {
+.co-ober-copy-btn {
   position: absolute;
   top: 4px;
   right: 4px;
@@ -1051,27 +1103,24 @@
   transition: opacity 0.15s;
 }
 
-pre:hover .copsilot-copy-btn {
+pre:hover .co-ober-copy-btn {
   opacity: 1;
 }
 
-.copsilot-copy-btn:hover {
+.co-ober-copy-btn:hover {
   background: var(--background-modifier-hover);
   color: var(--text-normal);
 }
 
 /* Diff rendering */
-.copsilot-diff {
+.co-ober-diff {
   border: 1px solid var(--background-modifier-border);
   border-radius: var(--radius-s);
   margin: 4px 0;
   overflow: hidden;
 }
 
-.copsilot-diff-header {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+.co-ober-diff-header {
   padding: 4px 8px;
   background: var(--background-secondary);
   font-size: var(--font-smaller);
@@ -1083,28 +1132,11 @@ pre:hover .copsilot-copy-btn {
   white-space: nowrap;
 }
 
-.diff-open-btn {
-  margin-left: auto;
-  cursor: pointer;
-  opacity: 0;
-  font-size: var(--font-smaller);
-  color: var(--text-accent);
-  flex-shrink: 0;
-}
-
-.copsilot-diff-header:hover .diff-open-btn {
-  opacity: 1;
-}
-
-.diff-open-btn:hover {
-  text-decoration: underline;
-}
-
-.copsilot-diff-header:hover {
+.co-ober-diff-header:hover {
   background: var(--background-modifier-hover);
 }
 
-.copsilot-diff-body {
+.co-ober-diff-body {
   padding: 4px 0;
   font-size: var(--font-smaller);
   font-family: var(--font-editor);
@@ -1115,6 +1147,8 @@ pre:hover .copsilot-copy-btn {
   display: flex;
   padding: 0 8px;
   line-height: 1.4;
+  word-break: break-all;
+  overflow-wrap: anywhere;
 }
 
 .diff-line .diff-marker {
@@ -1148,8 +1182,123 @@ pre:hover .copsilot-copy-btn {
   color: var(--text-muted);
 }
 
+/* ── Tool-specific expanded content ── */
+.co-ober-tool-lines {
+  font-family: var(--font-monospace);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.co-ober-tool-line {
+  padding: 0 2px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.co-ober-tool-line.hoverable {
+  cursor: pointer;
+}
+.co-ober-tool-line.hoverable:hover {
+  background: var(--background-modifier-hover);
+}
+.co-ober-tool-truncated {
+  color: var(--text-faint);
+  font-style: italic;
+  padding: 2px 0;
+  font-size: 10px;
+}
+.co-ober-tool-empty {
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 4px 0;
+  font-size: 11px;
+}
+.co-ober-tool-exit-status {
+  font-family: var(--font-monospace);
+  font-size: 10px;
+  color: var(--text-muted);
+  padding: 4px 8px;
+  margin-top: 4px;
+  border-top: 1px solid var(--background-modifier-border);
+}
+.co-ober-tool-exit-status.error {
+  color: var(--text-error);
+}
+.co-ober-tool-stderr {
+  font-family: var(--font-monospace);
+  font-size: 10px;
+  color: var(--text-error);
+  padding: 4px 8px;
+  background: rgba(239, 68, 68, 0.08);
+  border-radius: var(--radius-s);
+  margin-top: 4px;
+  white-space: pre-wrap;
+}
+.co-ober-tool-url {
+  font-family: var(--font-monospace);
+  font-size: 10px;
+  color: var(--text-muted);
+  padding: 4px 8px;
+  margin-top: 4px;
+  border-top: 1px solid var(--background-modifier-border);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* ── Apply Patch sections ── */
+.co-ober-patch-section {
+  margin: 6px 0;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-s);
+  overflow: hidden;
+}
+.co-ober-patch-file {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: var(--background-secondary);
+  font-family: var(--font-monospace);
+  font-size: 11px;
+}
+.co-ober-patch-file-icon {
+  display: flex;
+  align-items: center;
+  color: var(--text-accent);
+  flex-shrink: 0;
+}
+.co-ober-patch-file-icon svg {
+  width: 14px;
+  height: 14px;
+}
+.co-ober-patch-file-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-normal);
+}
+.co-ober-patch-op {
+  flex-shrink: 0;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+.co-ober-patch-op-add {
+  background: rgba(34, 197, 94, 0.15);
+  color: #16a34a;
+}
+.co-ober-patch-op-update {
+  background: rgba(59, 130, 246, 0.15);
+  color: #2563eb;
+}
+.co-ober-patch-op-delete {
+  background: rgba(239, 68, 68, 0.15);
+  color: #dc2626;
+}
+/* ── End tool-specific content ── */
+
 /* Welcome page */
-.copsilot-welcome {
+.co-ober-welcome {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1160,19 +1309,19 @@ pre:hover .copsilot-copy-btn {
   color: var(--text-muted);
 }
 
-.copsilot-welcome-title {
+.co-ober-welcome-title {
   font-size: 24px;
   font-weight: 600;
   color: var(--text-normal);
   margin-bottom: 4px;
 }
 
-.copsilot-welcome-subtitle {
+.co-ober-welcome-subtitle {
   font-size: var(--font-ui-small);
   margin-bottom: 24px;
 }
 
-.copsilot-welcome-shortcuts {
+.co-ober-welcome-shortcuts {
   font-size: var(--font-smaller);
   line-height: 1.8;
   text-align: left;
@@ -1182,12 +1331,12 @@ pre:hover .copsilot-copy-btn {
   border: 1px solid var(--background-modifier-border);
 }
 
-.copsilot-welcome-status {
+.co-ober-welcome-status {
   margin-top: 16px;
   font-size: var(--font-smaller);
 }
 
-.copsilot-welcome-status span {
+.co-ober-welcome-status span {
   color: var(--text-accent);
 }
 
@@ -1210,8 +1359,15 @@ pre:hover .copsilot-copy-btn {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 2px 0;
+  padding: 2px 4px;
   font-size: var(--font-smaller);
+  cursor: pointer;
+  border-radius: var(--radius-s);
+  transition: background-color 0.15s ease;
+}
+
+.copsilot-welcome-mcp-server:hover {
+  background: var(--background-modifier-hover);
 }
 
 .copsilot-welcome-mcp-dot {
@@ -1221,11 +1377,11 @@ pre:hover .copsilot-copy-btn {
 }
 
 /* Message timestamp */
-.copsilot-msg {
+.co-ober-msg {
   position: relative;
 }
 
-.copsilot-msg[data-timestamp]::after {
+.co-ober-msg[data-timestamp]::after {
   content: attr(data-timestamp);
   position: absolute;
   right: 8px;
@@ -1237,12 +1393,12 @@ pre:hover .copsilot-copy-btn {
   pointer-events: none;
 }
 
-.copsilot-msg:hover[data-timestamp]::after {
+.co-ober-msg:hover[data-timestamp]::after {
   opacity: 1;
 }
 
 /* Session search */
-.copsilot-session-search {
+.co-ober-session-search {
   width: 100%;
   padding: 6px 10px;
   border: none;
@@ -1252,45 +1408,55 @@ pre:hover .copsilot-copy-btn {
   outline: none;
 }
 
-.copsilot-session-search:focus {
+.co-ober-session-search:focus {
   background: var(--background-modifier-hover);
 }
 
-.copsilot-session-items {
+.co-ober-session-items {
   max-height: 350px;
   overflow-y: auto;
 }
 
-.copsilot-session-empty {
+.co-ober-session-empty {
   padding: 12px;
   text-align: center;
   color: var(--text-muted);
   font-size: var(--font-smaller);
 }
 
-/* New messages button */
-.copsilot-new-messages-btn {
+/* New messages button — left-anchored circle, slides in from left */
+.co-ober-new-messages-btn {
   position: sticky;
-  bottom: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--text-accent);
+  bottom: 12px;
+  left: 24px;
+  z-index: 50;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--interactive-accent);
   color: var(--text-on-accent);
   border: none;
-  border-radius: var(--radius-s);
-  padding: 6px 16px;
-  font-size: var(--font-smaller);
-  cursor: pointer;
-  z-index: 50;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease, box-shadow 0.2s ease;
+  animation: co-ober-slide-in-left 0.25s ease-out;
 }
 
-.copsilot-new-messages-btn:hover {
-  opacity: 0.9;
+.co-ober-new-messages-btn:hover {
+  opacity: 0.85;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.co-ober-new-messages-btn svg {
+  width: 16px;
+  height: 16px;
 }
 
 /* Drag overlay */
-.copsilot-drag-overlay {
+.co-ober-drag-overlay {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
@@ -1303,7 +1469,7 @@ pre:hover .copsilot-copy-btn {
   pointer-events: none;
 }
 
-.copsilot-drag-overlay div {
+.co-ober-drag-overlay div {
   background: var(--background-primary);
   padding: 16px 32px;
   border-radius: var(--radius-s);
@@ -1312,7 +1478,7 @@ pre:hover .copsilot-copy-btn {
 }
 
 /* Inline Edit Panel */
-.copsilot-inline-edit-panel {
+.co-ober-inline-edit-panel {
   position: fixed;
   bottom: 16px;
   right: 16px;
@@ -1331,14 +1497,663 @@ pre:hover .copsilot-copy-btn {
   gap: 12px;
 }
 
-.copsilot-inline-edit-title {
+.co-ober-inline-edit-title {
   font-weight: 600;
   font-size: var(--font-ui-medium);
   color: var(--text-normal);
 }
 
-.copsilot-inline-edit-actions {
+.co-ober-inline-edit-actions {
   display: flex;
   gap: 8px;
   justify-content: flex-end;
+}
+
+/* =============================================
+   Phase 1+ — Structured message rendering
+   ============================================= */
+
+/* Message content container for structured blocks */
+.co-ober-message-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* Plain text block */
+.co-ober-text-block {
+  position: relative;
+  font-size: var(--font-ui-small);
+  line-height: 1.6;
+  padding: 4px 0;
+}
+
+/* Text copy button — shown on hover */
+.co-ober-text-copy-btn {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  display: none;
+  padding: 2px 6px;
+  font-size: 10px;
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-s);
+  color: var(--text-muted);
+  cursor: pointer;
+  z-index: 5;
+  opacity: 0.8;
+  transition: opacity 0.15s;
+}
+.co-ober-text-copy-btn:hover {
+  opacity: 1;
+  color: var(--text-normal);
+}
+.co-ober-text-block:hover .co-ober-text-copy-btn {
+  display: block;
+}
+
+/* Thinking block — new structured variant (complements .co-ober-thinking) */
+.co-ober-thinking-block {
+  border: 1px dashed var(--background-modifier-border);
+  border-radius: var(--radius-s);
+  overflow: hidden;
+}
+.co-ober-thinking-block.is-thinking {
+  border-color: var(--text-accent);
+  border-style: solid;
+}
+.co-ober-thinking-block.is-collapsed .co-ober-thinking-body {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  padding-block: 0;
+  padding-inline-start: 0;
+  margin-inline-start: 0;
+  border-inline-start-width: 0;
+}
+.co-ober-tool-call.is-collapsed .co-ober-tool-call-body,
+.co-ober-write-edit.is-collapsed .co-ober-tool-call-body {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  padding-block: 0;
+  padding-inline-start: 0;
+  margin-inline-start: 0;
+  border-inline-start-width: 0;
+}
+.co-ober-thinking-block .co-ober-thinking-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  font-size: var(--font-smaller);
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+  background: var(--background-secondary);
+}
+.co-ober-thinking-block .co-ober-thinking-header:hover {
+  background: var(--background-modifier-hover);
+}
+.co-ober-thinking-block .co-ober-thinking-label {
+  font-weight: 500;
+}
+.co-ober-thinking-block .co-ober-thinking-timer {
+  font-family: var(--font-monospace);
+  font-size: 10px;
+  color: var(--text-faint);
+}
+.co-ober-thinking-block .co-ober-thinking-dot {
+  font-size: 14px;
+  line-height: 1;
+  color: var(--text-accent);
+  letter-spacing: 1px;
+  animation: co-ober-dot-pulse 1.5s ease-in-out infinite;
+}
+@keyframes co-ober-dot-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+.co-ober-thinking-block .co-ober-thinking-body {
+  padding: 8px 10px;
+  font-size: var(--font-smaller);
+  color: var(--text-muted);
+  font-style: italic;
+  line-height: 1.5;
+  max-height: 300px;
+  overflow-y: auto;
+}
+.co-ober-thinking-text {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.co-ober-thinking-show-all {
+  display: block;
+  margin-top: 8px;
+  padding: 4px 12px;
+  font-size: var(--font-smaller);
+  color: var(--text-accent);
+  background: none;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-s);
+  cursor: pointer;
+}
+.co-ober-thinking-show-all:hover {
+  background: var(--background-modifier-hover);
+}
+
+/* Tool call card — status augmentations */
+.co-ober-tool-call.status-running {
+  border-color: var(--text-accent);
+}
+.co-ober-tool-call.status-completed {
+  border-color: rgba(34, 197, 94, 0.4);
+}
+.co-ober-tool-call.status-error {
+  border-color: rgba(239, 68, 68, 0.4);
+}
+.co-ober-tool-call.status-blocked {
+  border-color: rgba(234, 179, 8, 0.4);
+}
+
+/* Tool status icons (rendered in header) */
+.co-ober-tool-status {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  font-size: 12px;
+  width: 16px;
+  height: 16px;
+  justify-content: center;
+}
+.co-ober-tool-status.status-running {
+  color: var(--text-accent);
+  animation: co-ober-spin 1s linear infinite;
+}
+.co-ober-tool-status.status-completed {
+  color: #22c55e;
+}
+.co-ober-tool-status.status-error {
+  color: var(--text-error);
+}
+.co-ober-tool-status.status-blocked {
+  color: #eab308;
+}
+
+/* Diff line additions — diff-line.added/removed/context already exist,
+   add truncated variant and stats label */
+.diff-line.truncated {
+  color: var(--text-faint);
+  font-style: italic;
+  padding: 0 8px;
+  line-height: 1.4;
+}
+.diff-stats {
+  font-family: var(--font-monospace);
+  font-size: 10px;
+  color: var(--text-faint);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.diff-path {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+.co-ober-diff-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Compact boundary indicator */
+.co-ober-compact-boundary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  margin: 8px 0;
+  color: var(--text-faint);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  user-select: none;
+}
+.co-ober-compact-boundary::before,
+.co-ober-compact-boundary::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--background-modifier-border);
+}
+.co-ober-compact-boundary .compact-icon {
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+/* Response footer — duration + token info */
+.co-ober-response-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 0;
+  font-size: 10px;
+  color: var(--text-faint);
+  margin-top: 2px;
+}
+.co-ober-response-footer .footer-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--text-faint);
+  flex-shrink: 0;
+}
+.co-ober-baked-duration {
+  font-family: var(--font-monospace);
+  font-size: 10px;
+  color: var(--text-faint);
+}
+
+/* Sub-agent block stub */
+.co-ober-subagent-block {
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-s);
+  padding: 6px 10px;
+  font-size: var(--font-smaller);
+  color: var(--text-muted);
+  background: var(--background-secondary);
+}
+.co-ober-subagent-block .subagent-name {
+  font-weight: 600;
+  color: var(--text-normal);
+}
+
+/* Baked footer (for historical messages) */
+.co-ober-baked-footer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 4px 2px 0;
+  font-size: 10px;
+  color: var(--text-faint);
+}
+
+/* Interrupt indicator */
+.co-ober-interrupt-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 5px;
+  font-size: 9px;
+  border-radius: 3px;
+  background: rgba(234, 179, 8, 0.15);
+  color: #eab308;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* =============================================
+   Claudian-inspired layout — cleaner, lighter
+   ============================================= */
+
+/* Messages container — tighter gap, no horizontal overflow */
+.co-ober-messages {
+  gap: 8px;
+  overflow-x: hidden;
+}
+
+/* User message — muted, no accent color clash */
+.co-ober-msg.user .co-ober-msg-body {
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--text-normal);
+  padding: 6px 12px;
+  border-radius: 8px;
+  border-end-end-radius: 4px;
+  max-width: 95%;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* Force-selectable content inside user messages — same treatment as assistant */
+.co-ober-msg.user * {
+  user-select: text;
+  -webkit-user-select: text;
+}
+body.theme-light .co-ober-msg.user .co-ober-msg-body {
+  background: var(--background-modifier-form-field);
+}
+
+/* Assistant message — transparent, full width, like streaming text */
+.co-ober-msg.assistant .co-ober-msg-body {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  max-width: 100%;
+  align-self: stretch;
+  width: 100%;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* Force-selectable content inside assistant messages (override Obsidian sidebar user-select: none) */
+.co-ober-msg.assistant * {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* Tool call bodies — also selectable */
+.co-ober-tool-call-body,
+.co-ober-thinking-body {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* Assistant text block — default font, no background, selectable */
+.co-ober-text-block {
+  font-size: var(--font-ui-small);
+  line-height: 1.6;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* ----- Thinking block — tree-branch style ----- */
+.co-ober-thinking-block {
+  border: none;
+  border-radius: 0;
+  overflow: visible;
+  margin: 8px 0;
+}
+.co-ober-thinking-block.is-thinking {
+  border: none;
+}
+.co-ober-thinking-block .co-ober-thinking-header {
+  background: transparent;
+  padding: 4px 0;
+  gap: 8px;
+  cursor: pointer;
+}
+.co-ober-thinking-block .co-ober-thinking-header:hover {
+  background: transparent;
+  opacity: 0.85;
+}
+.co-ober-thinking-block .co-ober-thinking-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-accent);
+}
+.co-ober-thinking-block .co-ober-thinking-timer {
+  font-family: var(--font-monospace);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.co-ober-thinking-block .co-ober-thinking-dot {
+  font-size: 14px;
+  line-height: 1;
+  color: var(--text-accent);
+  letter-spacing: 1px;
+  animation: co-ober-dot-pulse 1.5s ease-in-out infinite;
+}
+/* Thinking body — left-border tree branch */
+.co-ober-thinking-block .co-ober-thinking-body {
+  padding: 4px 0;
+  padding-inline-start: 24px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-inline-start: 2px solid var(--background-modifier-border);
+  border-inline-start-width: 2px;
+  margin-inline-start: 7px;
+  font-style: normal;
+  transition: max-height 0.25s ease, opacity 0.2s ease, padding-block 0.2s ease, border-inline-start-width 0.2s ease, margin-inline-start 0.2s ease;
+}
+.co-ober-thinking-text {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ----- Tool call — tree-branch style ----- */
+.co-ober-tool-call {
+  border: none;
+  border-radius: 0;
+  overflow: visible;
+  margin: 8px 0;
+}
+.co-ober-tool-call.status-running,
+.co-ober-tool-call.status-completed,
+.co-ober-tool-call.status-error,
+.co-ober-tool-call.status-blocked {
+  border: none;
+}
+.co-ober-tool-call-header {
+  background: transparent;
+  padding: 4px 0;
+  cursor: pointer;
+  gap: 8px;
+}
+.co-ober-tool-call-header:hover {
+  opacity: 0.85;
+}
+.co-ober-tool-call-header .tc-icon {
+  color: var(--text-accent);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+.co-ober-tool-call-header .tc-icon svg {
+  width: 14px;
+  height: 14px;
+}
+.co-ober-tool-call-header .tc-kind {
+  font-size: 13px;
+  font-weight: 400;
+  text-transform: none;
+  color: var(--text-normal);
+  font-family: var(--font-monospace);
+  flex-shrink: 0;
+  min-width: auto;
+}
+.co-ober-tool-call-header .tc-file {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-monospace);
+  font-size: 13px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.co-ober-tool-call-header .tc-stat {
+  flex-shrink: 0;
+  margin-left: auto;
+  font-family: var(--font-monospace);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.co-ober-tool-call-header .tc-stat.tc-stat-done {
+  color: #22c55e;
+}
+.co-ober-tool-call-header .tc-stat.tc-stat-fail {
+  color: var(--text-error);
+}
+
+/* ── Diff stats (+N -M) in write/edit tool headers ── */
+.tc-diff-stats {
+  font-family: var(--font-monospace);
+  font-size: 11px;
+  flex-shrink: 0;
+  margin-left: auto;
+  margin-right: 4px;
+}
+.tc-diff-stats .added {
+  color: var(--color-green);
+}
+.tc-diff-stats .removed {
+  color: var(--color-red);
+  margin-left: 4px;
+}
+
+/* Hide empty status on completion so +N -M aligns to right edge */
+.co-ober-write-edit.status-completed .tc-stat:empty {
+  display: none;
+}
+
+/* Tool body — left-border tree branch */
+.co-ober-tool-call-body {
+  padding: 4px 0;
+  padding-inline-start: 16px;
+  margin-inline-start: 7px;
+  border-inline-start: 2px solid var(--background-modifier-border);
+  border-inline-start-width: 2px;
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  white-space: pre-wrap;
+  font-family: var(--font-editor);
+  font-size: var(--font-smaller);
+  line-height: 1.4;
+  transition: max-height 0.25s ease, opacity 0.2s ease, padding-block 0.2s ease, border-inline-start-width 0.2s ease, margin-inline-start 0.2s ease;
+}
+
+/* Inner scrollable areas (diff content, code) in tool bodies */
+.co-ober-tool-call-body .diff-line { min-width: 0; }
+.co-ober-tool-call-body pre { overflow-x: auto; }
+
+/* Status borders -> left border color on body */
+.co-ober-tool-call.status-running .co-ober-tool-call-body {
+  border-inline-start-color: var(--text-accent);
+}
+.co-ober-tool-call.status-completed .co-ober-tool-call-body {
+  border-inline-start-color: rgba(34, 197, 94, 0.6);
+}
+.co-ober-tool-call.status-error .co-ober-tool-call-body {
+  border-inline-start-color: var(--text-error);
+}
+.co-ober-tool-call.status-blocked .co-ober-tool-call-body {
+  border-inline-start-color: var(--color-orange);
+}
+
+/* Write/edit blocks — same tree-branch style */
+.co-ober-write-edit .co-ober-tool-call-body {
+  border-inline-start: 2px solid var(--background-modifier-border);
+  margin-inline-start: 7px;
+  padding-inline-start: 16px;
+}
+
+/* Plan panel — subtle, inline */
+.co-ober-plan-panel {
+  border: none;
+  padding: 4px 0;
+  margin: 4px 0;
+}
+
+/* =============================================
+   Sibling spacing — thinking + tool + text
+   ============================================= */
+.co-ober-text-block + .co-ober-thinking-block,
+.co-ober-thinking-block + .co-ober-text-block,
+.co-ober-text-block + .co-ober-tool-call,
+.co-ober-tool-call + .co-ober-text-block,
+.co-ober-thinking-block + .co-ober-tool-call,
+.co-ober-tool-call + .co-ober-thinking-block {
+  margin-top: 8px;
+}
+
+/* =============================================
+   Scrollbar — thin, theme-aware
+   ============================================= */
+.co-ober-messages::-webkit-scrollbar {
+  width: 4px;
+}
+.co-ober-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+.co-ober-messages::-webkit-scrollbar-thumb {
+  background: var(--background-modifier-border);
+  border-radius: 2px;
+}
+.co-ober-messages::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* =============================================
+   Code blocks in tool/thinking bodies
+   ============================================= */
+.co-ober-tool-call-body pre,
+.co-ober-thinking-body pre {
+  background: var(--background-primary-alt);
+  padding: 8px 10px;
+  border-radius: var(--radius-s);
+  font-size: calc(var(--font-smaller) - 1px);
+  line-height: 1.5;
+  overflow-x: auto;
+}
+.co-ober-tool-call-body code,
+.co-ober-thinking-body code {
+  font-family: var(--font-monospace);
+  font-size: calc(var(--font-smaller) - 1px);
+}
+
+/* ── Queue indicator ── */
+.co-ober-queue-indicator {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+  background: var(--background-secondary);
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+.co-ober-queue-indicator.co-ober-visible {
+  display: flex;
+}
+.co-ober-queue-text {
+  font-family: var(--font-monospace);
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Interrupted indicator ── */
+.co-ober-interrupted-row {
+  padding: 8px 0 4px;
+  font-size: var(--font-ui-small);
+  line-height: 1.5;
+}
+.co-ober-interrupted-badge {
+  color: #d45d5d;
+  font-weight: 500;
+}
+.co-ober-interrupted-hint {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+.co-ober-message-content .co-ober-interrupted-row,
+.co-ober-msg-body .co-ober-interrupted-row {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* =============================================
+   New messages button — slide in from left
+   ============================================= */
+@keyframes co-ober-slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

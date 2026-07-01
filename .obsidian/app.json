@@ -1,5 +1,10 @@
 {
   "showInlineTitle": false,
   "promptDelete": false,
-  "defaultViewMode": "preview"
+  "defaultViewMode": "preview",
+  "alwaysUpdateLinks": true,
+  "userIgnoreFilters": [
+    "__pycache__",
+    "opencode-sync"
+  ]
 }
